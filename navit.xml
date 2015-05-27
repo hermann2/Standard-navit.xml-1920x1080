@@ -153,7 +153,8 @@
 
 	<log enabled="no" type="textfile_debug" data="$NAVIT_USER_DATADIR/debug_%Y%m%d-%i.txt" flush_size="1000" flush_time="30" />
 
-	<osd x="-1" y="-1"	type="cmd_interface" update_period="2" command='follow&gt;1 ?(tracking=0,pitch=0,orientation=0):(tracking=1,pitch=10,orientation=-1)' />
+	<osd x="-1" y="-1"	type="cmd_interface" update_period="2" command='follow&gt;1 ? (tracking=0,pitch=0,orientation=0) : (get_int_var(&quot;verkehr&quot;)==1 ? (tracking=0,pitch=0,orientation=-1) : (tracking=1,pitch=10,orientation=-1))' />
+	<osd x="1" y="-1"	type="cmd_interface" update_period="20" command='route.route_status>3 ? (route.route_status&lt;33 ? say("berechne Route"):(vehicle.position_radius&gt;25 ? say("kein g p s Signal"):&quot;&quot;):&quot;&quot;' />
 	<osd x="0" y="0" w="1260" h="60" font_size="750" type="text" label='${navit.messages}' enable_expression="route.route_status&amp;48" background_color="#00000090" align="5" text_color="#00FF00" />
 	<osd x="0" y="60" w="1260" h="70" font_size="1000" type="text" label='${navigation.item[1].street_name_systematic} ${navigation.item[1].street_name} ❷${navigation.item[2].street_name_systematic} ${navigation.item[2].street_name}'
 	enable_expression="route.route_status&amp;48" background_color="#00000090" align="6" text_color="#00FF00" />
@@ -189,20 +190,20 @@
 	<roadprofile item_types="track_unpaved"		speed="15" route_weight="10" />
 	<roadprofile item_types="street_service"	speed="20" route_weight="10" />
 	<roadprofile item_types="track_gravelled"	speed="20" route_weight="10" />
-	<roadprofile item_types="living_street"		speed="7" route_weight="10" />
+	<roadprofile item_types="living_street"		speed="7" route_weight="10" maxspeed="7" />
 	<roadprofile item_types="track_paved"		speed="30" route_weight="20" />
-	<roadprofile item_types="street_0"			speed="25" route_weight="30" />
-	<roadprofile item_types="street_1_city"		speed="30" route_weight="40" />
-	<roadprofile item_types="street_2_city"		speed="35" route_weight="60" />
+	<roadprofile item_types="street_0"			speed="25" route_weight="25" />
+	<roadprofile item_types="street_1_city"		speed="30" route_weight="30"/>
+	<roadprofile item_types="street_2_city"		speed="35" route_weight="60"/>
 	<roadprofile item_types="street_3_city"		speed="40" route_weight="70" />
 	<roadprofile item_types="street_4_city"		speed="50" route_weight="80" />
 	<roadprofile item_types="highway_city"		speed="70" route_weight="140" />
-	<roadprofile item_types="street_1_land"		speed="50" route_weight="50" />
-	<roadprofile item_types="street_2_land"		speed="65" route_weight="70" />
-	<roadprofile item_types="street_3_land"		speed="70" route_weight="80" />
-	<roadprofile item_types="street_4_land"		speed="80" route_weight="100" />
+	<roadprofile item_types="street_1_land"		speed="50" route_weight="40" maxspeed="100" />
+	<roadprofile item_types="street_2_land"		speed="65" route_weight="70" maxspeed="100" />
+	<roadprofile item_types="street_3_land"		speed="70" route_weight="80" maxspeed="100" />
+	<roadprofile item_types="street_4_land"		speed="80" route_weight="100" maxspeed="100" />
 	<roadprofile item_types="street_n_lanes"	speed="90" route_weight="120" />
-	<roadprofile item_types="highway_land"		speed="110" route_weight="140" />
+	<roadprofile item_types="highway_land"		speed="110" route_weight="140" maxspeed="130" />
 	<roadprofile item_types="ramp"				speed="40" route_weight="60" />
 	<roadprofile item_types="roundabout"		speed="30" route_weight="50" />
 	<roadprofile item_types="ferry"				speed="10" route_weight="20" />
@@ -272,52 +273,53 @@
 	<roadprofile item_types="ferry" speed="40" route_weight="40"/>
 	</vehicleprofile>
 	<vehicleprofile name="bike" route_depth="18:25%,18:40000" flags="0x40000000" flags_forward_mask="0x40000000" flags_reverse_mask="0x40000000" maxspeed_handling="1" route_mode="0" static_speed="5" static_distance="25">
-	<roadprofile item_types="steps" speed="2" route_weight="5"/>
+	<roadprofile item_types="steps"						speed="2" route_weight="5"/>
 	<roadprofile item_types="street_pedestrian,footway" speed="5" route_weight="10"/>
-	<roadprofile item_types="path,track_ground" speed="12" route_weight="12"/>
-	<roadprofile item_types="track_gravelled" speed="17" route_weight="15"/>
+	<roadprofile item_types="path,track_ground"			speed="12" route_weight="12"/>
+	<roadprofile item_types="track_gravelled"			speed="17" route_weight="15"/>
 	<roadprofile item_types="track_paved,cycleway,street_service,street_parking_lane" speed="22" route_weight="20"/>
-	<roadprofile item_types="street_0,street_1_city,living_street" speed="20" route_weight="15"/>
+	<roadprofile item_types="living_street"				speed="7" route_weight="15" maxspeed="7" />
+	<roadprofile item_types="street_0,street_1_city"	speed="20" route_weight="15"/>
 	<roadprofile item_types="street_2_city,street_1_land,street_2_land" speed="22" route_weight="12"/>
-	<roadprofile item_types="street_3_city" speed="22" route_weight="10"/>
-	<roadprofile item_types="street_4_city,ramp" speed="22" route_weight="7"/>
+	<roadprofile item_types="street_3_city"				speed="22" route_weight="10"/>
+	<roadprofile item_types="street_4_city,ramp"		speed="22" route_weight="7"/>
 	<roadprofile item_types="street_3_land,street_4_land" speed="20" route_weight="7"/>
-	<roadprofile item_types="roundabout" speed="20" route_weight="10"/>
-	<roadprofile item_types="ferry" speed="40" route_weight="40"/>
+	<roadprofile item_types="roundabout"				speed="20" route_weight="10"/>
+	<roadprofile item_types="ferry"						speed="10" route_weight="40"/>
 	</vehicleprofile>
-	<vehicleprofile name="pedestrian" route_depth="18:25%,18:10000" flags="0x80000000" flags_forward_mask="0x80000000" flags_reverse_mask="0x80000000" maxspeed_handling="1" route_mode="0" static_speed="3" static_distance="10">
+	<vehicleprofile name="pedestrian" route_depth="18:25%,18:50000" flags="0x80000000" flags_forward_mask="0x80000000" flags_reverse_mask="0x80000000" maxspeed_handling="1" route_mode="0" static_speed="3" static_distance="10">
 	<roadprofile item_types="hiking_alpine_difficult"	speed="1" route_weight="1" />
-	<roadprofile item_types="hiking_alpine_demanding"	speed="2" route_weight="2" />
-	<roadprofile item_types="hiking_alpine"				speed="2" route_weight="3" />
-	<roadprofile item_types="hiking_mountain_demanding"	speed="2" route_weight="4" />
-	<roadprofile item_types="hiking_mountain"			speed="3" route_weight="5" />
-	<roadprofile item_types="street_service"			speed="5" route_weight="6" />
-	<roadprofile item_types="street_parking_lane"		speed="4" route_weight="6" />
-	<roadprofile item_types="cycleway"					speed="6" route_weight="4" />
-	<roadprofile item_types="street_0"					speed="4" route_weight="8" />
-	<roadprofile item_types="street_1_city"				speed="4" route_weight="8" />
-	<roadprofile item_types="street_2_city"				speed="4" route_weight="8" />
-	<roadprofile item_types="street_3_city"				speed="4" route_weight="6" />
-	<roadprofile item_types="street_4_city"				speed="4" route_weight="6" />
-	<roadprofile item_types="street_1_land"				speed="5" route_weight="8" />
-	<roadprofile item_types="street_2_land"				speed="5" route_weight="8" />
-	<roadprofile item_types="street_3_land"				speed="5" route_weight="6" />
-	<roadprofile item_types="street_4_land"				speed="5" route_weight="6" />
-	<roadprofile item_types="ramp"						speed="5" route_weight="6" />
-	<roadprofile item_types="track_gravelled"			speed="6" route_weight="10" />
-	<roadprofile item_types="track_paved"				speed="6" route_weight="10" />
-	<roadprofile item_types="track_unpaved"				speed="5" route_weight="10" />
-	<roadprofile item_types="track_grass"				speed="5" route_weight="6" />
-	<roadprofile item_types="track_ground"				speed="5" route_weight="8" />
-	<roadprofile item_types="hiking"					speed="5" route_weight="6" />
-	<roadprofile item_types="steps"						speed="3" route_weight="4" />
-	<roadprofile item_types="footway"					speed="6" route_weight="10" />
-	<roadprofile item_types="bridleway"					speed="6" route_weight="6" />
-	<roadprofile item_types="path"						speed="6" route_weight="8" />
-	<roadprofile item_types="living_street"				speed="5" route_weight="10" />
-	<roadprofile item_types="street_pedestrian"			speed="5" route_weight="10" />
-	<roadprofile item_types="roundabout"				speed="5" route_weight="5" />
-	<roadprofile item_types="ferry"						speed="20" route_weight="15" />
+	<roadprofile item_types="hiking_alpine_demanding"	speed="2" route_weight="5" />
+	<roadprofile item_types="hiking_alpine"				speed="2" route_weight="10" />
+	<roadprofile item_types="hiking_mountain_demanding"	speed="2" route_weight="20" />
+	<roadprofile item_types="hiking_mountain"			speed="3" route_weight="30" />
+	<roadprofile item_types="street_4_land"				speed="5" route_weight="40" />
+	<roadprofile item_types="street_3_land"				speed="5" route_weight="50" />
+	<roadprofile item_types="street_2_land"				speed="5" route_weight="50" />
+	<roadprofile item_types="street_1_land"				speed="5" route_weight="60" />
+	<roadprofile item_types="ramp"						speed="5" route_weight="30" />
+	<roadprofile item_types="street_4_city"				speed="4" route_weight="50" />
+	<roadprofile item_types="street_3_city"				speed="4" route_weight="50" />
+	<roadprofile item_types="street_2_city"				speed="4" route_weight="50" />
+	<roadprofile item_types="street_parking_lane"		speed="4" route_weight="50" />
+	<roadprofile item_types="bridleway"					speed="5" route_weight="50" />
+	<roadprofile item_types="track_grass"				speed="5" route_weight="50" />
+	<roadprofile item_types="track_ground"				speed="5" route_weight="60" />
+	<roadprofile item_types="street_service"			speed="5" route_weight="60" />
+	<roadprofile item_types="steps"						speed="2" route_weight="60" />
+	<roadprofile item_types="track_unpaved"				speed="5" route_weight="70" />
+	<roadprofile item_types="street_1_city"				speed="4" route_weight="70" />
+	<roadprofile item_types="street_0"					speed="4" route_weight="70" />
+	<roadprofile item_types="cycleway"					speed="6" route_weight="80" />
+	<roadprofile item_types="track_gravelled"			speed="6" route_weight="80" />
+	<roadprofile item_types="track_paved"				speed="6" route_weight="90" />
+	<roadprofile item_types="hiking"					speed="5" route_weight="90" />
+	<roadprofile item_types="path"						speed="5" route_weight="90" />
+	<roadprofile item_types="living_street"				speed="6" route_weight="100" />
+	<roadprofile item_types="street_pedestrian"			speed="5" route_weight="110" />
+	<roadprofile item_types="footway"					speed="6" route_weight="120" />
+	<roadprofile item_types="roundabout"				speed="5" route_weight="10" />
+	<roadprofile item_types="ferry"						speed="10" route_weight="10" />
 	</vehicleprofile>
 	<route destination_distance="50" />
 	<navigation>
