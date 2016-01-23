@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE config SYSTEM "navit.dtd">
+﻿<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE config SYSTEM "navit.dtd">
 
 <config xmlns:xi="http://www.w3.org/2001/XInclude" language="de_AT">
 
@@ -67,7 +67,7 @@
 </a>
 <a name='POI_Icons'><text>POI-selection</text>
 	<img cond='navit.get_int_var("geo")==0' src='gui_search' onclick='navit.layout_name="WALKER_no_select";navit.vehicle[@name=&quot;Local GPS&quot;].profilename="pedestrian";
-		navit.set_int_var("verkehr",1);navit.set_int_var("wanderung",1);navit.set_int_var("geo",1);navit.toggle_layer("geocaching");refresh()'><text>GEOCACHING</text></img>
+		navit.set_int_var("wanderung",1);navit.set_int_var("geo",1);navit.toggle_layer("geocaching");refresh()'><text>GEOCACHING</text></img>
 	<img cond='navit.get_int_var("geo")==1' src='gui_quit' onclick='navit.toggle_layer("geocaching");navit.set_int_var("geo",0);refresh();redraw_map()'><text>GEOCACHING</text></img>
 	<img cond='navit.get_int_var("eigene")==0' src='gui_stop' onclick='navit.toggle_layer("my");navit.set_int_var("eigene",1);refresh()'><text>OWN</text></img>
 	<img cond='navit.get_int_var("eigene")==1' src='gui_active' onclick='navit.toggle_layer("my");navit.set_int_var("eigene",0);refresh()'><text>OWN</text></img>
@@ -91,7 +91,7 @@
 	<a href='#poi_on'><img src='zoom_out'><text>ALL off</text></img></a>
 </a>
 <a name='poi_on'><text>ALL off</text>
-	<img src='gui_map' onclick='redraw_map();back_to_map()'><text>Map</text></img><script>
+	<img src='gui_map' onclick='back_to_map()'><text>Map</text></img><script>
 	navit.get_int_var("icon")==1 ?(navit.toggle_layer("poly_icon_label"),navit.toggle_layer("line"),navit.set_int_var("icon",0)):"";
 	navit.get_int_var("wanderung")==1 ?(navit.toggle_layer("hiking"),navit.toggle_layer("hiking_way"),navit.set_int_var("wanderung",0)):"";
 	navit.get_int_var("winter")==1 ?(navit.toggle_layer("wintersport"),navit.set_int_var("winter",0)):"";
@@ -103,7 +103,7 @@
 	navit.get_int_var("gebäude")==1 ?(navit.toggle_layer("POI_Icons_full"),navit.set_int_var("gebäude",0)):""</script>
 </a>
 <a name='poi_off'><text>ALL on</text>
-	<img src='gui_map' onclick='redraw_map();back_to_map()'><text>Map</text></img><script>
+	<img src='gui_map' onclick='back_to_map()'><text>Map</text></img><script>
 	navit.get_int_var("icon")==0 ?(navit.toggle_layer("poly_icon_label"),navit.toggle_layer("line"),navit.set_int_var("icon",1)):"";
 	navit.get_int_var("wanderung")==0 ?(navit.toggle_layer("hiking"),navit.toggle_layer("hiking_way"),navit.set_int_var("wanderung",1)):"";
 	navit.get_int_var("winter")==0 ?(navit.toggle_layer("wintersport"),navit.set_int_var("winter",1)):"";
@@ -137,7 +137,7 @@
 </a>
 </html> ]]></gui>
 
-	<osd x="-1" y="-1" w="1" h="1" type="cmd_interface" update_period="1" command='follow&gt;1||zoom>64?(tracking=0,pitch=0,orientation=0):(get_int_var("verkehr")==1?(tracking=0,pitch=0,orientation=-1):(tracking=1,pitch=10,orientation=-1))'/>
+	<osd x="-1" y="-1" w="1" h="1" type="cmd_interface" update_period="1" command='follow&gt;1||zoom>64?(tracking=0,pitch=0,orientation=0):(tracking=1,pitch=10,orientation=-1)'/>
 	<osd x="0" y="0" w="1260" h="60" font_size="750" type="text" label='${navit.messages}' enable_expression="navigation.nav_status&gt;=3" background_color="#00000090" align="5" text_color="#00FF00"/>
 	<osd x="0" y="60" w="1260" h="70" font_size="950" type="text" label='${navigation.item[1].street_name_systematic} ${navigation.item[1].street_name} ❷${navigation.item[2].street_name_systematic} ${navigation.item[2].street_name}'
 		enable_expression="navigation.nav_status&gt;=3" background_color="#00000090" align="6" text_color="#00FF00"/>
@@ -154,8 +154,8 @@
 	<osd x="0" y="130" w="210" h="210" type="navigation_next_turn" icon_src="%s_wh_210_210.png" command='say("route");tracking=0;pitch=0;follow=80000;zoom_to_route()' enable_expression="navigation.nav_status&gt;=3" background_color="#00000090"/>
 	<osd x="0" y="-140" w="160" h="140" font_size="650" type="text" label='\n[LAYER]' command='say("l");layout==layout[@name=="WALKER"]||layout==layout[@name=="PAX"]?(layout=layout[@name=="PAX"],gui.menu("#b_b"))
 		:(toggle_layer("poly_1"),toggle_layer("poly_2"),toggle_layer("wayside"),toggle_layer("line_1"))' background_color="#FFFFFF00" align="0" text_color="#902080"/>
-	<osd x="270" y="-180"	type="button" src="$NAVIT_USER_DATADIR/maske/zp_180_180.png" command='zoom_in()'/>
-	<osd x="-440" y="-180"	type="button" src="$NAVIT_USER_DATADIR/maske/zm_180_180.png" command='zoom_out()'/>
+	<osd x="270" y="-180"	type="button" src="gui_plus_180_180.png" command='zoom_in()'/>
+	<osd x="-440" y="-180"	type="button" src="gui_minus_180_180.png" command='zoom_out()'/>
 	<osd x="-190" y="-190"	type="button" src="gui_menu_128_128.png" command='gui.menu(1)'/>
 	<osd x="-210" y="-450" w="210" h="260" font_size="750" type="compass" enable_expression="navigation.nav_status&gt;=3" background_color="#00000090"/>
 	<osd x="-210" y="-195" w="210" h="50" font_size="750" type="text" label='${vehicle.position_height}NN' enable_expression="navigation.nav_status&gt;=3" background_color="#00000090" align="0" text_color="#FFFFFF"/>
@@ -1237,7 +1237,7 @@
 	<itemgra item_types="poly_pedestrian" order="17-"><polygon color="#DEE6CC70"/><text text_size="28" background_color="#707000"/></itemgra>
 </layer>
 <layer name="highway_2">
-	<itemgra item_types="street_parking_lane" order="13"><polyline color="#AAAADD" width="6"/></itemgra>
+	<itemgra item_types="street_parking_lane" order="13"><polyline color="#707EFF" width="4"/></itemgra>
 	<itemgra item_types="street_parking_lane" order="14"><polyline color="#AAAADD" width="8"/></itemgra>
 	<itemgra item_types="street_parking_lane" order="15-16"><polyline color="#AAAADD" width="16"/><text text_size="20" background_color="#707EFF"/></itemgra>
 	<itemgra item_types="street_parking_lane" order="17"><polyline color="#AAAADD" width="32"/><text text_size="32" background_color="#707EFF"/></itemgra>
@@ -1248,7 +1248,7 @@
 	<itemgra item_types="street_pedestrian" order="15-16"><polyline color="#DEE6CC" width="24"/><text text_size="20" background_color="#707000"/></itemgra>
 	<itemgra item_types="street_pedestrian" order="17"><polyline color="#DEE6CC" width="46"/><text text_size="32" background_color="#707000"/></itemgra>
 	<itemgra item_types="street_pedestrian" order="18-"><polyline color="#DEE6CC" width="94"/><text text_size="46" background_color="#707000"/></itemgra>
-	<itemgra item_types="street_service" order="12"><polyline color="#94A4C4" width="6"/></itemgra>
+	<itemgra item_types="street_service" order="12"><polyline color="#C79999" width="4"/></itemgra>
 	<itemgra item_types="street_service" order="13"><polyline color="#94A4C4" width="8"/></itemgra>
 	<itemgra item_types="street_service" order="14"><polyline color="#94A4C4" width="10"/></itemgra>
 	<itemgra item_types="street_service" order="15-16"><polyline color="#94A4C4" width="16"/><text text_size="20" color="#C77777" background_color="#000000"/></itemgra>
@@ -2052,7 +2052,7 @@
 	<itemgra item_types="aeroway_runway" order="17"><polyline color="#909090" width="154"/><text text_size="48" color="#FFFFFF"/></itemgra>
 	<itemgra item_types="aeroway_runway" order="18"><polyline color="#909090" width="306"/><text text_size="60" color="#FFFFFF"/></itemgra>
 	<itemgra item_types="aeroway_runway" order="19"><polyline color="#909090" width="612"/><text text_size="72" color="#FFFFFF"/></itemgra>
-	<itemgra item_types="aeroway_runway" order="20-"><polyline color="#909090" width="1224"/><text text_size="84" color="#FFFFFF"/></itemgra>
+	<itemgra item_types="aeroway_runway" order="20-"><polyline color="#909090" width="9"/><text text_size="84" color="#FFFFFF"/></itemgra>
 	<itemgra item_types="poly_terminal" order="15-18"><polygon color="#CB99FE90"/></itemgra>
 	<itemgra item_types="poly_terminal" order="19-"><polygon color="#CB99FEBB"/><polyline color="#AB6B6B" width="4"/><circle text_size="32" color="#790079"/></itemgra>
 	<itemgra item_types="poi_heliport" order="13-14"><icon src="heliport" w="48" h="48"/></itemgra>
