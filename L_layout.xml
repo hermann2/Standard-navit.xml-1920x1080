@@ -1,21 +1,24 @@
 <layout name="Car-Android1" color="#fef9ee" font="Liberation Sans" active="0">
-	<cursor w="155" h="155">
+	<cursor w="190" h="190">
 	<itemgra speed_range="-2"><polyline color="#00BC00" radius="0" width="11"><coord x="0" y="0"/></polyline>
-		<circle color="#008500" radius="24" width="8"><coord x="0" y="0"/></circle>
-		<circle color="#00BC00" radius="35" width="8"><coord x="0" y="0"/></circle>
-		<circle color="#008500" radius="48" width="8"><coord x="0" y="0"/></circle>
+	<circle color="#008500" radius="24" width="8"><coord x="0" y="0"/></circle>
+	<circle color="#00BC00" radius="35" width="8"><coord x="0" y="0"/></circle>
+	<circle color="#008500" radius="48" width="8"><coord x="0" y="0"/></circle>
 	</itemgra>
 	<itemgra speed_range="3-">
-		<polygon color="#00000066"><coord x="-56" y="-72"/><coord x="0" y="32"/><coord x="56" y="-72"/><coord x="0" y="-32"/><coord x="-56" y="-72"/></polygon>
-		<polygon color="#008500"><coord x="-56" y="-48"/><coord x="0" y="56"/><coord x="0" y="-8"/><coord x="-56" y="-48"/></polygon>
-		<polygon color="#00BC00"><coord x="56" y="-48"/><coord x="0" y="56"/><coord x="0" y="-8"/><coord x="56" y="-48"/></polygon>
-		<polyline color="#008500" width="3"><coord x="-56" y="-48"/><coord x="0" y="56"/><coord x="0" y="-8"/><coord x="-56" y="-48"/></polyline>
-		<polyline color="#008500" width="3"><coord x="56" y="-48"/><coord x="0" y="56"/><coord x="0" y="-8"/><coord x="56" y="-48"/></polyline>
+	<polygon color="#00000066"><coord x="-56" y="-72"/><coord x="0" y="32"/><coord x="56" y="-72"/><coord x="0" y="-32"/><coord x="-56" y="-72"/></polygon>
+	<polygon color="#008500"><coord x="-56" y="-48"/><coord x="0" y="56"/><coord x="0" y="-8"/><coord x="-56" y="-48"/></polygon>
+	<polygon color="#00BC00"><coord x="56" y="-48"/><coord x="0" y="56"/><coord x="0" y="-8"/><coord x="56" y="-48"/></polygon>
+	<polyline color="#008500" width="3"><coord x="-56" y="-48"/><coord x="0" y="56"/><coord x="0" y="-8"/><coord x="-56" y="-48"/></polyline>
+	<polyline color="#008500" width="3"><coord x="56" y="-48"/><coord x="0" y="56"/><coord x="0" y="-8"/><coord x="56" y="-48"/></polyline>
 	</itemgra>
 	</cursor>
 <layer name="world_poly">
 	<itemgra item_types="image" order="-11"><image/></itemgra>
-	<itemgra item_types="poly_water_tiled" order="6-11"><polygon color="#8CCFFF"/></itemgra>
+	<itemgra item_types="poly_water_tiled" order="6-"><polygon color="#8CCFFF"/></itemgra>
+	<itemgra item_types="water_line" order="7-12">	<polyline color="#396999" width="2"/></itemgra>
+	<itemgra item_types="water_line" order="13-16">	<polyline color="#396999" width="2"/>	<circle text_size="28"/></itemgra>
+	<itemgra item_types="water_line" order="17-">	<polyline color="#396999" width="4"/>	<circle text_size="38"/>	<text text_size="32"/></itemgra>
 	<itemgra item_types="poly_water" order="8-11"><polygon color="#77CCEE"/></itemgra>
 	<itemgra item_types="poi_customc" order="2"><icon src="%s" w="32" h="32"/></itemgra>
 	<itemgra item_types="poi_customc" order="3"><icon src="%s" w="48" h="48" x="0" y="64"/><circle text_size="24" color="" background_color="#B00000"/></itemgra>
@@ -134,7 +137,8 @@
 	<itemgra item_types="street_4_city,street_4_land,street_n_lanes" order="15-16"><polyline color="#000000" width="52"/><polyline color="#f8dc79" width="44"/></itemgra>
 	<itemgra item_types="street_4_city,street_4_land,street_n_lanes" order="17"><polyline color="#000000" width="84"/><polyline color="#f8dc79" width="74"/></itemgra>
 	<itemgra item_types="street_4_city,street_4_land,street_n_lanes" order="18"><polyline color="#000000" width="164"/><polyline color="#f8dc79" width="154"/></itemgra>
-	<itemgra item_types="highway_city,highway_land" order="6-7"><polyline color="#fc843b" width="10"/></itemgra>
+	<itemgra item_types="highway_city,highway_land" order="6"><polyline color="#fc843b" width="6"/></itemgra>
+	<itemgra item_types="highway_city,highway_land" order="7"><polyline color="#fc843b" width="10"/></itemgra>
 	<itemgra item_types="highway_city,highway_land" order="8-9"><polyline color="#a8aab3" width="14"/><polyline color="#fc843b" width="10"/></itemgra>
 	<itemgra item_types="highway_city,highway_land" order="10-11"><polyline color="#a8aab3" width="18"/><polyline color="#fc843b" width="12"/></itemgra>
 	<itemgra item_types="highway_city,highway_land" order="12"><polyline color="#a8aab3" width="24"/><polyline color="#fc843b" width="18"/></itemgra>
@@ -191,7 +195,7 @@
     <itemgra item_types="poi_customb" order="12-"><circle text_size="36" color="#990099"/></itemgra>
 	<itemgra item_types="house_number" order="17-"><circle color="#000000" text_size="28" radius="8"/></itemgra>
 	<itemgra item_types="town_label,town_label_0e0,town_label_1e0,town_label_2e0,town_label_5e0,town_label_1e1,town_label_2e1,town_label_5e1,town_label_1e2,town_label_2e2,town_label_5e2" order="12-">
-	<circle color="#000000" text_size="26" radius="8"/></itemgra>
+	<circle color="#000000" text_size="28" radius="8"/></itemgra>
 	<itemgra item_types="town_label_1e3,place_label" order="12-"><circle color="#000000" text_size="32" radius="8"/></itemgra>
 	<itemgra item_types="town_label_5e3,town_label_1e4,town_label_2e4,town_label_5e4" order="12-16"><circle color="#000000" text_size="40" radius="8"/></itemgra>
 	<itemgra item_types="town_label_1e5,town_label_2e5,town_label_5e5" order="12-15"><circle color="#000000" text_size="42" radius="8"/></itemgra>
@@ -227,7 +231,7 @@
 	<itemgra item_types="nav_none" order="5-"><icon src="unknown" w="64" h="64"/></itemgra>
 	<itemgra item_types="announcement" order="7-"><icon src="gui_sound" w="64" h="64"/><circle color="#FF089C" text_size="28" radius="27"/></itemgra>
 </layer>
-<layer name="POI Symbols">
+<layer name="POI Symbols" active="1">
 	<itemgra item_types="mini_roundabout" order="14-"><icon src="mini_roundabout" w="64" h="64"/></itemgra>
 	<itemgra item_types="turning_circle" order="14-"><icon src="mini_roundabout" w="64" h="64"/></itemgra>
 	<itemgra item_types="poi_airport" order="10-"><icon src="airport" w="64" h="64"/></itemgra>

@@ -6,134 +6,131 @@
 <debug name="global" dbg_level="error" level="0"/>
 <debug name="segv" level="1"/>
 
-<navit center="13.5666 48.1333"	zoom="4" zoom_max="524288" autozoom="1" autozoom_active="1" pitch="10" tracking="1" orientation="-1" recent_dest="30" waypoints_flag="1" timeout="86400" radius="30" drag_bitmap="1" osd_configuration="1">
-<graphics type="android"/>
-<speech type="android" cps="30"/>
+	<navit center="13.5666 48.1333"	zoom="8" zoom_max="524288" autozoom="1" autozoom_active="1" pitch="10" tracking="1" orientation="-1" recent_dest="30" waypoints_flag="1" timeout="86400" radius="30" drag_bitmap="1" osd_configuration="1">
+	<graphics type="android"/>
+	<speech type="android" cps="30"/>
 
 <xi:include href="$NAVIT_USER_DATADIR/map.xml"/>
 
-<vehicle name="Local GPS" profilename="car" active="yes" source="android:" follow="1" follow_cursor="1" lag="15">
+	<vehicle name="Local GPS" profilename="car" active="yes" source="android:" follow="1" follow_cursor="1" lag="15">
 	<log enabled="no" type="gpx" attr_types="position_time_iso8601,position_direction,position_speed,profilename,position_radius" data="$NAVIT_USER_DATADIR/track_%Y%m%d-%%i.gpx" flush_size="1000" flush_time="30"/>
-</vehicle>
-	<!-- <vehicle name="Demo" profilename="car" enabled="no" active="yes" source="demo://" speed="80"/> -->
+	</vehicle>
+	<!-- <vehicle name="Demo" profilename="car" enabled="no" active="yes" source="demo://" speed="80"/>  -->
 
-	<gui type="internal" menu_on_map_click="0" background_color="#FFCC33" background_color2="#CC9311" text_background="#002050" text_color="#002050" font_size="750" icon_xs="128" icon_s="128" icon_l="138" spacing="2"><![CDATA[
+	<gui type="internal" menu_on_map_click="0" background_color="#FFCC33" background_color2="#CC9311" text_background="#002050" text_color="#002050" font_size="700" icon_xs="128" icon_s="138" icon_l="138" spacing="0"><![CDATA[
 <html>
-<a name='Main Menu'><text>Main menu</text>
-	<img cond='navit.speech.active==0' src='gui_stop' onclick='navit.speech.active=1'><text>Speech</text></img>
-	<img cond='navit.speech.active!=0' src='gui_sound' onclick='navit.speech.active=0;back_to_map()'><text>Speech</text></img>
-	<img src='gui_town' onclick='town()'><text>Town</text></img>
+<a name='Main Menu'><text>H A U P T M E N Ü</text>
+	<img cond='navit.speech.active==0' src='gui_sound_off' onclick='navit.speech.active=1;navit.say("Sprache an");back_to_map()'><text>Sprache</text></img>
+	<img cond='navit.speech.active!=0' src='gui_sound' onclick='navit.speech.active=0;back_to_map()'><text>Sprache</text></img>
+	<img src='gui_town' onclick='town()'><text>ZIEL eingeben</text></img>
+	<img cond='navit.layout!=navit.layout[@name=="MOTORIST"]' src='gui_vehicle' onclick='navit.layout=navit.layout[@name=="MOTORIST"];navit.vehicle[@name="Local GPS"].profilename="car";menu("#POI_2");back_to_map()'><text>Car</text></img>
 	<img cond='navit.layout==navit.layout[@name=="MOTORIST"]' src='gui_active' onclick='back_to_map()'><text>Car</text></img>
-	<img cond='navit.layout!=navit.layout[@name=="MOTORIST"]' src='gui_vehicle' onclick='navit.layout=navit.layout[@name=="MOTORIST"];navit.vehicle[@name="Local GPS"].profilename="car";back_to_map()'><text>Car</text></img>
-	<img src='gui_bookmark' onclick='bookmarks()'><text>Bookmarks</text></img>
-	<img cond='navit.layout!=navit.layout[@name=="CYCLIST"]' src='bicycle_shop' onclick='navit.layout=navit.layout[@name=="CYCLIST"];navit.vehicle[@name="Local GPS"].profilename="bike";back_to_map()'><text>Bicycle</text></img>
+	<img src='gui_bookmark' onclick='bookmarks()'><text>Lesezeichen</text></img>
+	<img cond='navit.layout!=navit.layout[@name=="CYCLIST"]' src='bicycle_shop' onclick='navit.layout=navit.layout[@name=="CYCLIST"];navit.vehicle[@name="Local GPS"].profilename="bike";menu("#POI_1");back_to_map()'><text>Bicycle</text></img>
 	<img cond='navit.layout==navit.layout[@name=="CYCLIST"]' src='gui_active' onclick='back_to_map()'><text>Bicycle</text></img>
-	<img src='gui_actions' onclick='setting_vehicle()'><text>Vehicle</text></img>
-	<img cond='navit.layout!=navit.layout[@name=="WALKER"]' src='gui_vehicle_pedestrian' onclick='navit.layout=navit.layout[@name=="WALKER"];navit.vehicle[@name="Local GPS"].profilename="pedestrian";back_to_map()'><text>Pedestrian</text></img>
+	<img src='gui_actions' onclick='setting_vehicle()'><text>PROFIL ändern</text></img>
+	<img cond='navit.layout!=navit.layout[@name=="WALKER"]' src='gui_vehicle_pedestrian' onclick='navit.layout=navit.layout[@name=="WALKER"];navit.vehicle[@name="Local GPS"].profilename="pedestrian";menu("#POI_1");back_to_map()'><text>Pedestrian</text></img>
 	<img cond='navit.layout==navit.layout[@name=="WALKER"]' src='gui_active' onclick='back_to_map()'><text>Pedestrian</text></img>
 	<img src='gui_map' onclick='setting_maps()'><text>Maps</text></img>
-	<a href='#Route'><img src='gui_home'><text>Route</text></img></a>
-	<a href='#Settings'><img src='gui_home'><text>Settings</text></img></a>
-	<img cond='navit.route.route_status&amp;1' src='gui_quit' onclick='abort_navigation();refresh();redraw_map()'><text>Stop Navigation</text></img>
+	<a href='#Route'><img src='$NAVIT_USER_DATADIR/maske/tool'><text>[ ROUTE-DATEN ]</text></img></a>
+	<a href='#Settings'><img src='$NAVIT_USER_DATADIR/maske/setting'><text>[ EINSTELLUNG ]</text></img></a>
+	<img cond='navit.route.route_status&amp;1' src='gui_quit' onclick='navit.say("navigieren beendet");abort_navigation();refresh();redraw_map()'><text>AUS navigieren</text></img>
 	<img src='gui_quit' onclick='quit()'><text>Quit</text></img>
 </a>
-<a name='Route'><text>Route</text>
+<a name='Route'><text>ROUTE - DATEN</text>
 	<img src='gui_about' onclick='about()'><text>About</text></img>
-	<img src='gui_formerdests' onclick='formerdests()'><text>Former Destinations</text></img>
-	<img src='gui_maps' onclick='enter_coord()'><text>Coordinates</text></img>
-	<img cond='navit.route.route_status&amp;1' src='gui_log' onclick='route_description()'><text>Description</text></img>
-	<img cond='position_coord_geo' src='gui_maps' onclick='position(position_coord_geo,_("Vehicle Position"),8|32|64|128|256)'><text>POINT Cursor</text></img>
-	<img cond='menu_on_map_click==0' src='gui_stop' onclick='menu_on_map_click=1;back_to_map()'><text>Map click</text></img>
-	<img cond='menu_on_map_click==1' src='gui_maps' onclick='position(click_coord_geo,_("Map Point"),8|16|32|64|256)'><text>Map Point</text></img>
-	<img cond='menu_on_map_click==1' src='gui_active' onclick='menu_on_map_click=0;back_to_map()'><text>Map click</text></img>
-	<img cond='navit.waypoints_flag &amp;&amp;(navit.route.route_status&amp;1)' src='cursor_still' onclick='waypoints()'><text>Waypoints</text></img>
-	<img cond='navit.waypoints_flag &amp;&amp;(navit.route.route_status&amp;1)' src='gui_stop' onclick='navit.route_remove_last_waypoint()'><text>Drop last Waypoint</text></img>
-	<img cond='navit.waypoints_flag &amp;&amp;(navit.route.route_status&amp;1)' src='gui_stop' onclick='navit.route_remove_next_waypoint()'><text>Drop last Waypoint</text></img>
+	<img src='gui_formerdests' onclick='navit.say("Zielwahl aus vorherigen");formerdests()'><text>Letzte Ziele</text></img>
+	<img src='gui_maps' onclick='enter_coord()'><text>PUNKT eingeben</text></img>
+	<img cond='navit.route.route_status&amp;1' src='gui_log' onclick='route_description()'><text>Wegbeschreibung</text></img>
+	<img cond='position_coord_geo' src='cursor_still' onclick='navit.say("Aktion an der Position Cursor");position(position_coord_geo,_("Vehicle Position"),8|32|64|128|256)'><text>PUNKT Cursor</text></img>
+	<img cond='menu_on_map_click==0' src='gui_stop' onclick='navit.say("suche am Kartenpunkt an");menu_on_map_click=1;back_to_map()'><text>PUNKT Karte</text></img>
+	<img cond='menu_on_map_click==1' src='gui_maps' onclick='navit.say("Aktion am Kartenpunkt");position(click_coord_geo,_("Map Point"),8|16|32|64|256)'><text>PUNKT Karte</text></img>
+	<img cond='menu_on_map_click==1' src='gui_active' onclick='navit.say("Menüzugang Zahnrad");menu_on_map_click=0;back_to_map()'><text>TIPP Karte</text></img>
+	<img cond='navit.waypoints_flag &amp;&amp;(navit.route.route_status&amp;1)' src='cursor_still' onclick='navit.say("Aktion mit Etappenziel");waypoints()'><text>Etappenziele</text></img>
+	<img cond='navit.waypoints_flag &amp;&amp;(navit.route.route_status&amp;1)' src='gui_stop' onclick='navit.say("letzten Zielpunkt entfernt");navit.route_remove_last_waypoint()'><text>LÖSCHE Ziel</text></img>
+	<img cond='navit.waypoints_flag &amp;&amp;(navit.route.route_status&amp;1)' src='gui_stop' onclick='navit.say("Etappenziel entfernt");navit.route_remove_next_waypoint()'><text>LÖSCHE Etappe</text></img>
 </a>
-<a name='Settings'><text>Settings</text>
-	<img src='gui_actions' onclick='navit.toggle_layer("up_street");navit.toggle_layer("under_street");back_to_map()'><text>Route line ±</text></img>
-	<img cond='navit.autozoom_active==0' src='gui_stop' onclick='navit.autozoom_active=1;back_to_map()'><text>Autozoom</text></img>
-	<img cond='navit.autozoom_active!=0' src='gui_zoom_in' onclick='navit.autozoom_active=0;back_to_map()'><text>Autozoom</text></img>
-	<img src='gui_settings' onclick='setting_rules()'><text>Rules</text></img>
-	<img cond='navit.osd_configuration==1' src='gui_stop' onclick='navit.odometer_reset("odo_reset");navit.osd_configuration=2;redraw_map();back_to_map()'><text>Statistik</text></img>
-	<img cond='navit.osd_configuration==2' src='gui_log' onclick='navit.osd_configuration=1;refresh()'><text>Statistik</text></img>
-	<img cond='fullscreen==0' src='gui_fullscreen' onclick='fullscreen=1'><text>Fullscreen</text></img>
-	<img cond='fullscreen==1' src='gui_leave_fullscreen' onclick='fullscreen=0'><text>Window Mode</text></img>
+<a name='Settings'><text>EINSTELLUNGEN</text>
+	<img src='gui_actions' onclick='navit.toggle_layer("up_street");navit.toggle_layer("under_street");back_to_map()'><text> Routelinie ±</text></img>
+	<img cond='navit.autozoom_active==0' src='gui_stop' onclick='navit.say("autozoom aktiv");navit.autozoom_active=1;back_to_map()'><text>Autozoom</text></img>
+	<img cond='navit.autozoom_active!=0' src='gui_zoom_in' onclick='navit.say("autozoom aus");navit.autozoom_active=0;back_to_map()'><text>Autozoom</text></img>
+	<img src='gui_settings' onclick='navit.say("Regeln vorgeben");setting_rules()'><text>Regeln setzen</text></img>
+	<img cond='navit.osd_configuration==1' src='gui_stop' onclick='navit.say("aktiv nach klick auf das Feld");navit.odometer_reset("odo_reset");navit.osd_configuration=2;redraw_map();back_to_map()'><text>Statistik</text></img>
+	<img cond='navit.osd_configuration==2' src='gui_log' onclick='navit.say("ist aus");navit.osd_configuration=1;refresh()'><text>Statistik</text></img>
+	<img cond='fullscreen==0' src='gui_fullscreen' onclick='navit.say("Vollbild");fullscreen=1'><text>Vollbild</text></img>
+	<img cond='fullscreen==1' src='gui_leave_fullscreen' onclick='navit.say("Statuszeile oben sichtbar");fullscreen=0'><text>Fensterbild</text></img>
 	<img src='gui_display' onclick='setting_layout()'><text>Layout</text></img>
-	<img src='gui_bookmark' onclick='locale()'><text>Locale</text></img>
-	<img cond='navit.layout!=navit.layout[@name=="DARKGLOW"]' src='gui_vehicle' onclick='navit.layout=navit.layout[@name=="DARKGLOW"];back_to_map()'><text>Darkglow</text></img>
-	<img cond='navit.layout!=navit.layout[@name=="MOTORIST_1"]' src='cursor' onclick='navit.layout=navit.layout[@name=="MOTORIST_1"];back_to_map()'><text>CAR_Cursor-1</text></img>
-	<img cond='navit.layout!=navit.layout[@name=="PAX"]' src='airport' onclick='navit.layout=navit.layout[@name=="PAX"],menu("#b_b")'><text>Passanger</text></img>
+	<img src='gui_bookmark' onclick='navit.say("aktuelle Landkennung");locale()'><text>Landkennung</text></img>
+	<img cond='navit.layout!=navit.layout[@name=="DARKGLOW"]' src='gui_vehicle' onclick='navit.layout=navit.layout[@name=="DARKGLOW"];menu("#POI_2");back_to_map()'><text>Nachtansicht</text></img>
+	<img cond='navit.layout!=navit.layout[@name=="MOTORIST_1"]' src='cursor' onclick='navit.layout=navit.layout[@name=="MOTORIST_1"];menu("#POI_2");back_to_map()'><text>CAR_Cursor-1</text></img>
+	<img cond='navit.layout!=navit.layout[@name=="PAX"]' src='airport' onclick='navit.layout=navit.layout[@name=="PAX"];menu("#POI_1");menu("#b_b")'><text>Passagier</text></img>
 </a>
-<a name='POI_Icons'><text>POI-selection</text>
-	<img cond='navit.get_int_var("geo")==0' src='gui_search' onclick='navit.layout_name="WALKER_no_select";navit.vehicle[@name=&quot;Local GPS&quot;].profilename="pedestrian";
-		navit.set_int_var("wanderung",1);navit.set_int_var("geo",1);navit.toggle_layer("geocaching");refresh()'><text>GEOCACHING</text></img>
-	<img cond='navit.get_int_var("geo")==1' src='gui_quit' onclick='navit.toggle_layer("geocaching");navit.set_int_var("geo",0);refresh();redraw_map()'><text>GEOCACHING</text></img>
-	<img cond='navit.get_int_var("eigene")==0' src='gui_stop' onclick='navit.toggle_layer("my");navit.set_int_var("eigene",1);refresh()'><text>OWN</text></img>
-	<img cond='navit.get_int_var("eigene")==1' src='gui_active' onclick='navit.toggle_layer("my");navit.set_int_var("eigene",0);refresh()'><text>OWN</text></img>
-	<img cond='navit.get_int_var("icon")==0' src='gui_stop' onclick='navit.toggle_layer("poly_icon_label");navit.toggle_layer("line");navit.set_int_var("icon",1);refresh()'><text>Landscape</text></img>
-	<img cond='navit.get_int_var("icon")==1' src='gui_active' onclick='navit.toggle_layer("poly_icon_label");navit.toggle_layer("line");navit.set_int_var("icon",0);refresh()'><text>Landscape</text></img>
-	<img cond='navit.get_int_var("wanderung")==0' src='gui_stop' onclick='navit.toggle_layer("hiking");navit.toggle_layer("hiking_way");navit.set_int_var("wanderung",1);refresh()'><text>Hiking</text></img>
-	<img cond='navit.get_int_var("wanderung")==1' src='gui_active' onclick='navit.toggle_layer("hiking");navit.toggle_layer("hiking_way");navit.set_int_var("wanderung",0);refresh()'><text>Hiking</text></img>
+<a name='POI_1'><script>
+	navit.set_int_var("eigene",0);navit.set_int_var("points",1);navit.set_int_var("icon",0);navit.set_int_var("wanderung",1);navit.set_int_var("winter",0);
+	navit.set_int_var("freizeit",0);navit.set_int_var("geschäft",0);navit.set_int_var("sports",0);navit.set_int_var("gast",0);navit.set_int_var("gebäude",1);</script>
+</a>
+<a name='POI_2'><script>
+	navit.set_int_var("eigene",0);navit.set_int_var("points",0);navit.set_int_var("icon",0);navit.set_int_var("wanderung",0);navit.set_int_var("winter",0);
+	navit.set_int_var("freizeit",0);navit.set_int_var("geschäft",0);navit.set_int_var("sports",0);navit.set_int_var("gast",0);navit.set_int_var("gebäude",0);</script>
+</a>
+<a name='POI_Icons'><text>POI-Auswahl</text>
+	<img cond='navit.get_int_var("eigene")==0' src='gui_stop' onclick='navit.toggle_layer("my");navit.set_int_var("eigene",1);refresh()'><text>EIGENE</text></img>
+	<img cond='navit.get_int_var("eigene")==1' src='gui_active' onclick='navit.toggle_layer("my");navit.set_int_var("eigene",0);refresh()'><text>EIGENE</text></img>
+	<img cond='navit.get_int_var("points")==0' src='gui_stop' onclick='navit.toggle_layer("station");navit.set_int_var("points",1);refresh()'><text>Haltestellen</text></img>
+	<img cond='navit.get_int_var("points")==1' src='gui_active' onclick='navit.toggle_layer("station");navit.set_int_var("points",0);refresh()'><text>Haltestellen</text></img>
+	<img cond='navit.get_int_var("icon")==0' src='gui_stop' onclick='navit.toggle_layer("poly_icon");navit.toggle_layer("poly_icon_label");navit.toggle_layer("line");navit.set_int_var("icon",1);refresh()'><text>Landschaft</text></img>
+	<img cond='navit.get_int_var("icon")==1' src='gui_active' onclick='navit.toggle_layer("poly_icon");navit.toggle_layer("poly_icon_label");navit.toggle_layer("line");navit.set_int_var("icon",0);refresh()'><text>Landschaft</text></img>
+	<img cond='navit.get_int_var("wanderung")==0' src='gui_stop' onclick='navit.toggle_layer("hiking");navit.toggle_layer("hiking_way");navit.set_int_var("wanderung",1);refresh()'><text>Wanderung</text></img>
+	<img cond='navit.get_int_var("wanderung")==1' src='gui_active' onclick='navit.toggle_layer("hiking");navit.toggle_layer("hiking_way");navit.set_int_var("wanderung",0);refresh()'><text>Wanderung</text></img>
 	<img cond='navit.get_int_var("winter")==0' src='gui_stop' onclick='navit.toggle_layer("wintersport");navit.set_int_var("winter",1);refresh()'><text>Wintersport</text></img>
 	<img cond='navit.get_int_var("winter")==1' src='gui_active' onclick='navit.toggle_layer("wintersport");navit.set_int_var("winter",0);refresh()'><text>Wintersport</text></img>
-	<img cond='navit.get_int_var("freizeit")==0' src='gui_stop' onclick='navit.toggle_layer("leisure");navit.set_int_var("freizeit",1);refresh()'><text>Leisure</text></img>
-	<img cond='navit.get_int_var("freizeit")==1' src='gui_active' onclick='navit.toggle_layer("leisure");navit.set_int_var("freizeit",0);refresh()'><text>Leisure</text></img>
-	<img cond='navit.get_int_var("geschäft")==0' src='gui_stop' onclick='navit.toggle_layer("shop");navit.set_int_var("geschäft",1);refresh()'><text>Shops</text></img>
-	<img cond='navit.get_int_var("geschäft")==1' src='gui_active' onclick='navit.toggle_layer("shop");navit.set_int_var("geschäft",0);refresh()'><text>Shops</text></img>
+	<img cond='navit.get_int_var("freizeit")==0' src='gui_stop' onclick='navit.toggle_layer("leisure");navit.set_int_var("freizeit",1);refresh()'><text>Freizeit</text></img>
+	<img cond='navit.get_int_var("freizeit")==1' src='gui_active' onclick='navit.toggle_layer("leisure");navit.set_int_var("freizeit",0);refresh()'><text>Freizeit</text></img>
+	<img cond='navit.get_int_var("geschäft")==0' src='gui_stop' onclick='navit.toggle_layer("shop");navit.set_int_var("geschäft",1);refresh()'><text>Geschäfte</text></img>
+	<img cond='navit.get_int_var("geschäft")==1' src='gui_active' onclick='navit.toggle_layer("shop");navit.set_int_var("geschäft",0);refresh()'><text>Geschäfte</text></img>
 	<img cond='navit.get_int_var("sports")==0' src='gui_stop' onclick='navit.toggle_layer("sport");navit.set_int_var("sports",1);refresh()'><text>Sport</text></img>
 	<img cond='navit.get_int_var("sports")==1' src='gui_active' onclick='navit.toggle_layer("sport");navit.set_int_var("sports",0);refresh()'><text>Sport</text></img>
-	<img cond='navit.get_int_var("gast")==0' src='gui_stop' onclick='navit.toggle_layer("gastro");navit.set_int_var("gast",1);refresh()'><text>Gastronomy</text></img>
-	<img cond='navit.get_int_var("gast")==1' src='gui_active' onclick='navit.toggle_layer("gastro");navit.set_int_var("gast",0);refresh()'><text>Gastronomy</text></img>
-	<img cond='navit.get_int_var("gebäude")==0' src='gui_stop' onclick='navit.toggle_layer("POI_Icons_full");navit.set_int_var("gebäude",1);refresh()'><text>Building</text></img>
-	<img cond='navit.get_int_var("gebäude")==1' src='gui_active' onclick='navit.toggle_layer("POI_Icons_full");navit.set_int_var("gebäude",0);refresh()'><text>Building</text></img>
-	<a href='#poi_off'><img src='zoom_in'><text>ALL on</text></img></a>
-	<a href='#poi_on'><img src='zoom_out'><text>ALL off</text></img></a>
+	<img cond='navit.get_int_var("gast")==0' src='gui_stop' onclick='navit.toggle_layer("gastro");navit.set_int_var("gast",1);refresh()'><text>Gastronomie</text></img>
+	<img cond='navit.get_int_var("gast")==1' src='gui_active' onclick='navit.toggle_layer("gastro");navit.set_int_var("gast",0);refresh()'><text>Gastronomie</text></img>
+	<img cond='navit.get_int_var("gebäude")==0' src='gui_stop' onclick='navit.toggle_layer("Android-POI-Icons-full");navit.set_int_var("gebäude",1);refresh()'><text>Gebäude</text></img>
+	<img cond='navit.get_int_var("gebäude")==1' src='gui_active' onclick='navit.toggle_layer("Android-POI-Icons-full");navit.set_int_var("gebäude",0);refresh()'><text>Gebäude</text></img>
+	<img src='zoom_in' onclick='menu("#poi_off");back_to_map()'><text>ALLE an</text></img>
+	<img src='zoom_out' onclick='menu("#poi_on");back_to_map()'><text>ALLE aus</text></img>
 </a>
-<a name='poi_on'><text>ALL off</text>
-	<img src='gui_map' onclick='back_to_map()'><text>Map</text></img><script>
-	navit.get_int_var("icon")==1 ?(navit.toggle_layer("poly_icon_label"),navit.toggle_layer("line"),navit.set_int_var("icon",0)):"";
-	navit.get_int_var("wanderung")==1 ?(navit.toggle_layer("hiking"),navit.toggle_layer("hiking_way"),navit.set_int_var("wanderung",0)):"";
-	navit.get_int_var("winter")==1 ?(navit.toggle_layer("wintersport"),navit.set_int_var("winter",0)):"";
-	navit.get_int_var("freizeit")==1 ?(navit.toggle_layer("leisure"),navit.set_int_var("freizeit",0)):"";
-	navit.get_int_var("geschäft")==1 ?(navit.toggle_layer("shop"),navit.set_int_var("geschäft",0)):"";
-	navit.get_int_var("sports")==1 ?(navit.toggle_layer("sport"),navit.set_int_var("sports",0)):"";
-	navit.get_int_var("gast")==1 ?(navit.toggle_layer("gastro"),navit.set_int_var("gast",0)):"";
-	navit.get_int_var("eigene")==1 ?(navit.toggle_layer("my"),navit.set_int_var("eigene",0)):"";
-	navit.get_int_var("gebäude")==1 ?(navit.toggle_layer("POI_Icons_full"),navit.set_int_var("gebäude",0)):""</script>
+<a name='poi_on'>
+	<script>
+	navit.get_int_var("points")==1 ?(navit.toggle_layer("station"),navit.set_int_var("points",0)):"";navit.get_int_var("icon")==1 ?(navit.toggle_layer("poly_icon"),navit.toggle_layer("poly_icon_label"),navit.toggle_layer("line"),navit.set_int_var("icon",0)):"";
+	navit.get_int_var("wanderung")==1 ?(navit.toggle_layer("hiking"),navit.toggle_layer("hiking_way"),navit.set_int_var("wanderung",0)):"";navit.get_int_var("winter")==1 ?(navit.toggle_layer("wintersport"),navit.set_int_var("winter",0)):"";
+	navit.get_int_var("freizeit")==1 ?(navit.toggle_layer("leisure"),navit.set_int_var("freizeit",0)):"";navit.get_int_var("geschäft")==1 ?(navit.toggle_layer("shop"),navit.set_int_var("geschäft",0)):"";navit.get_int_var("sports")==1 ?(navit.toggle_layer("sport"),navit.set_int_var("sports",0)):"";
+	navit.get_int_var("gast")==1 ?(navit.toggle_layer("gastro"),navit.set_int_var("gast",0)):"";navit.get_int_var("gebäude")==1 ?(navit.toggle_layer("Android-POI-Icons-full"),navit.set_int_var("gebäude",0)):"";</script>
 </a>
-<a name='poi_off'><text>ALL on</text>
-	<img src='gui_map' onclick='back_to_map()'><text>Map</text></img><script>
-	navit.get_int_var("icon")==0 ?(navit.toggle_layer("poly_icon_label"),navit.toggle_layer("line"),navit.set_int_var("icon",1)):"";
-	navit.get_int_var("wanderung")==0 ?(navit.toggle_layer("hiking"),navit.toggle_layer("hiking_way"),navit.set_int_var("wanderung",1)):"";
-	navit.get_int_var("winter")==0 ?(navit.toggle_layer("wintersport"),navit.set_int_var("winter",1)):"";
-	navit.get_int_var("freizeit")==0 ?(navit.toggle_layer("leisure"),navit.set_int_var("freizeit",1)):"";
-	navit.get_int_var("geschäft")==0 ?(navit.toggle_layer("shop"),navit.set_int_var("geschäft",1)):"";
-	navit.get_int_var("sports")==0 ?(navit.toggle_layer("sport"),navit.set_int_var("sports",1)):"";
-	navit.get_int_var("gast")==0 ?(navit.toggle_layer("gastro"),navit.set_int_var("gast",1)):"";
-	navit.get_int_var("eigene")==0 ?(navit.toggle_layer("my"),navit.set_int_var("eigene",1)):"";
-	navit.get_int_var("gebäude")==0 ?(navit.toggle_layer("POI_Icons_full"),navit.set_int_var("gebäude",1)):""</script>
+<a name='poi_off'>
+	<script>
+	navit.get_int_var("points")==0 ?(navit.toggle_layer("station"),navit.set_int_var("points",1)):"";navit.get_int_var("icon")==0 ?(navit.toggle_layer("poly_icon"),navit.toggle_layer("poly_icon_label"),navit.toggle_layer("line"),navit.set_int_var("icon",1)):"";
+	navit.get_int_var("wanderung")==0 ?(navit.toggle_layer("hiking"),navit.toggle_layer("hiking_way"),navit.set_int_var("wanderung",1)):"";navit.get_int_var("winter")==0 ?(navit.toggle_layer("wintersport"),navit.set_int_var("winter",1)):"";
+	navit.get_int_var("freizeit")==0 ?(navit.toggle_layer("leisure"),navit.set_int_var("freizeit",1)):"";navit.get_int_var("geschäft")==0 ?(navit.toggle_layer("shop"),navit.set_int_var("geschäft",1)):"";navit.get_int_var("sports")==0 ?(navit.toggle_layer("sport"),navit.set_int_var("sports",1)):"";
+	navit.get_int_var("gast")==0 ?(navit.toggle_layer("gastro"),navit.set_int_var("gast",1)):"";navit.get_int_var("gebäude")==0 ?(navit.toggle_layer("Android-POI-Icons-full"),navit.set_int_var("gebäude",1)):"";</script>
 </a>
-<a name='b_b'><text>Passagier</text>
-	<img cond='navit.get_int_var("s_bahn")==0' src='gui_stop' onclick='navit.toggle_layer("tram");navit.set_int_var("s_bahn",1);refresh()'><text>Tram</text></img>
-	<img cond='navit.get_int_var("s_bahn")==1' src='gui_active' onclick='navit.toggle_layer("tram");navit.set_int_var("s_bahn",0);refresh()'><text>Tram</text></img>
+<a name='b_b'><text>Auswahl Transport</text>
+	<img cond='navit.get_int_var("s_bahn")==0' src='gui_stop' onclick='navit.toggle_layer("tram");navit.set_int_var("s_bahn",1);refresh()'><text>Straßenbahn</text></img>
+	<img cond='navit.get_int_var("s_bahn")==1' src='gui_active' onclick='navit.toggle_layer("tram");navit.set_int_var("s_bahn",0);refresh()'><text>Straßenbahn</text></img>
 	<img cond='navit.get_int_var("bus")==0' src='gui_stop' onclick='navit.toggle_layer("passenger");navit.set_int_var("bus",1);refresh()'><text>Taxi Bus</text></img>
 	<img cond='navit.get_int_var("bus")==1' src='gui_active' onclick='navit.toggle_layer("passenger");navit.set_int_var("bus",0);refresh()'><text>Taxi Bus</text></img>
-	<img cond='navit.get_int_var("bahn")==0' src='gui_stop' onclick='navit.toggle_layer("rails");navit.toggle_layer("rails_label");navit.set_int_var("bahn",1);refresh()'><text>U-/Rail</text></img>
-	<img cond='navit.get_int_var("bahn")==1' src='gui_active' onclick='navit.toggle_layer("rails");navit.toggle_layer("rails_label");navit.set_int_var("bahn",0);refresh()'><text>U-/Rail</text></img>
-	<img cond='navit.get_int_var("flug")==0' src='gui_stop' onclick='navit.toggle_layer("airport");navit.set_int_var("flug",1);refresh()'><text>Airport</text></img>
-	<img cond='navit.get_int_var("flug")==1' src='gui_active' onclick='navit.toggle_layer("airport");navit.set_int_var("flug",0);refresh()'><text>Airport</text></img>
-	<img cond='navit.get_int_var("fähre")==0' src='gui_stop' onclick='navit.toggle_layer("ferrys");navit.set_int_var("fähre",1);refresh()'><text>Ferry</text></img>
-	<img cond='navit.get_int_var("fähre")==1' src='gui_active' onclick='navit.toggle_layer("ferrys");navit.set_int_var("fähre",0);refresh()'><text>Ferry</text></img>
-	<img cond='navit.get_int_var("seil")==0' src='gui_stop' onclick='navit.toggle_layer("lift");navit.set_int_var("seil",1);refresh()'><text>Lift</text></img>
-	<img cond='navit.get_int_var("seil")==1' src='gui_active' onclick='navit.toggle_layer("lift");navit.set_int_var("seil",0);refresh()'><text>Lift</text></img>
-	<img src='gui_vehicle_pedestrian' onclick='navit.layout=navit.layout[@name=="WALKER"];back_to_map()'><text>Pedestrian</text></img>
-	<img cond='(navit.get_int_var("s_bahn")==0)&amp;&amp;(navit.get_int_var("bus")==0)&amp;&amp;(navit.get_int_var("bahn")==0)&amp;&amp;(navit.get_int_var("flug")==0)&amp;&amp;(navit.get_int_var("fähre")==0)&amp;&amp;(navit.get_int_var("seil")==0)'src='gui_map'
-		onclick='navit.toggle_layer("tram");navit.set_int_var("s_bahn",1);navit.toggle_layer("passenger");navit.set_int_var("bus",1);navit.toggle_layer("rails");navit.toggle_layer("rails_label");navit.set_int_var("bahn",1);
-		navit.toggle_layer("airport");navit.set_int_var("flug",1);navit.toggle_layer("ferrys");navit.set_int_var("fähre",1);navit.toggle_layer("lift");navit.set_int_var("seil",1);back_to_map()'><text>ALL on</text></img>
-	<img cond='(navit.get_int_var("s_bahn")==1)&amp;&amp;(navit.get_int_var("bus")==1)&amp;&amp;(navit.get_int_var("bahn")==1)&amp;&amp;(navit.get_int_var("flug")==1)&amp;&amp;(navit.get_int_var("fähre")==1)&amp;&amp;(navit.get_int_var("seil")==1)' src='rail_station'
-		onclick='navit.toggle_layer("tram");navit.set_int_var("s_bahn",0);navit.toggle_layer("passenger");navit.set_int_var("bus",0);navit.toggle_layer("rails");navit.toggle_layer("rails_label");navit.set_int_var("bahn",0);
-		navit.toggle_layer("airport");navit.set_int_var("flug",0);navit.toggle_layer("ferrys");navit.set_int_var("fähre",0);navit.toggle_layer("lift");navit.set_int_var("seil",0);refresh()'><text>ALL off</text></img>
+	<img cond='navit.get_int_var("bahn")==0' src='gui_stop' onclick='navit.toggle_layer("rails");navit.toggle_layer("rails_label");navit.set_int_var("bahn",1);refresh()'><text>U-/Eisenbahn</text></img>
+	<img cond='navit.get_int_var("bahn")==1' src='gui_active' onclick='navit.toggle_layer("rails");navit.toggle_layer("rails_label");navit.set_int_var("bahn",0);refresh()'><text>U-/Eisenbahn</text></img>
+	<img cond='navit.get_int_var("flug")==0' src='gui_stop' onclick='navit.toggle_layer("airport");navit.set_int_var("flug",1);refresh()'><text>Flugplatz</text></img>
+	<img cond='navit.get_int_var("flug")==1' src='gui_active' onclick='navit.toggle_layer("airport");navit.set_int_var("flug",0);refresh()'><text>Flugplatz</text></img>
+	<img cond='navit.get_int_var("fähre")==0' src='gui_stop' onclick='navit.toggle_layer("ferrys");navit.set_int_var("fähre",1);refresh()'><text>Fähre</text></img>
+	<img cond='navit.get_int_var("fähre")==1' src='gui_active' onclick='navit.toggle_layer("ferrys");navit.set_int_var("fähre",0);refresh()'><text>Fähre</text></img>
+	<img cond='navit.get_int_var("seil")==0' src='gui_stop' onclick='navit.toggle_layer("lift");navit.set_int_var("seil",1);refresh()'><text>Seilbahn</text></img>
+	<img cond='navit.get_int_var("seil")==1' src='gui_active' onclick='navit.toggle_layer("lift");navit.set_int_var("seil",0);refresh()'><text>Seilbahn</text></img>
+	<img src='gui_vehicle_pedestrian' onclick='navit.say("Fussgänger");navit.layout_name="WALKER_no_select";redraw_map();back_to_map()'><text>Fußgänger</text></img>
+	<img cond='(navit.get_int_var("s_bahn")==0)&amp;&amp;(navit.get_int_var("bus")==0)&amp;&amp;(navit.get_int_var("bahn")==0)&amp;&amp;(navit.get_int_var("flug")==0)&amp;&amp;(navit.get_int_var("fähre")==0)&amp;&amp;(navit.get_int_var("seil")==0)'
+	src='rail_station' onclick='navit.say("Passagier");navit.toggle_layer("tram");navit.set_int_var("s_bahn",1);navit.toggle_layer("passenger");navit.set_int_var("bus",1);navit.toggle_layer("rails");navit.toggle_layer("rails_label");navit.set_int_var("bahn",1);
+		navit.toggle_layer("airport");navit.set_int_var("flug",1);navit.toggle_layer("ferrys");navit.set_int_var("fähre",1);navit.toggle_layer("lift");navit.set_int_var("seil",1);back_to_map()'><text>ALLE an</text></img>
+	<img cond='(navit.get_int_var("s_bahn")==1)&amp;&amp;(navit.get_int_var("bus")==1)&amp;&amp;(navit.get_int_var("bahn")==1)&amp;&amp;(navit.get_int_var("flug")==1)&amp;&amp;(navit.get_int_var("fähre")==1)&amp;&amp;(navit.get_int_var("seil")==1)'
+	src='rail_station' onclick='navit.toggle_layer("tram");navit.set_int_var("s_bahn",0);navit.toggle_layer("passenger");navit.set_int_var("bus",0);navit.toggle_layer("rails");navit.toggle_layer("rails_label");navit.set_int_var("bahn",0);
+		navit.toggle_layer("airport");navit.set_int_var("flug",0);navit.toggle_layer("ferrys");navit.set_int_var("fähre",0);navit.toggle_layer("lift");navit.set_int_var("seil",0);refresh()'><text>ALLE aus</text></img>
 </a>
 </html> ]]></gui>
 
@@ -144,7 +141,7 @@
 	<osd x="0" y="340" w="210" h="80" font_size="1300" type="text" label='${navigation.item[1].length[value]}' enable_expression="navigation.nav_status&gt;=3" background_color="#FFFFFFAA" align="0" text_color="#0000FF"/>
 	<osd x="-160" y="0" w="160" h="140" font_size="650" type="text" label='[TOWN] \n' command='say("m");toggle_layer("labels_bevore");toggle_layer("world_labels_bevore")' background_color="#FFFFFF00" align="0" text_color="#902080"/>
 	<osd x="0" y="0" w="160" h="140" font_size="650" type="text" label='[POI]\n' command='layout==layout[@name=="Car-Android1"]?toggle_layer("Android-POI-Icons-full"):gui.menu("#POI_Icons")' background_color="#FFFFFF00" align="0" text_color="#902080"/>
-	<osd x="0" y="-450" w="230" h="230" font_size="750" type="text" label='CENTER\nCURSOR' command='follow=0;zoom=4;set_center_cursor()' enable_expression="follow&gt;1" background_color="#56FF00BB" align="4" text_color="#000000"/>
+	<osd x="0" y="-450" w="230" h="230" font_size="750" type="text" label='CENTER\nCURSOR' command='follow=0;set_center_cursor()' enable_expression="follow&gt;1" background_color="#56FF00BB" align="4" text_color="#000000"/>
 	<osd x="0" y="-450" w="230" h="230" font_size="1300" type="speed_warner" label='images' speed_exceed_limit_offset="5" speed_exceed_limit_percent="10" announce_on="1" enable_expression="navigation.nav_status&gt;=3" background_color="#FFFFFF90"/>
 	<osd x="0" y="-220" w="230" h="100" font_size="1700" type="text" label="${vehicle.position_speed[value]}" enable_expression="navigation.nav_status&gt;=3" background_color="#0000FF90" align="0" text_color="#FF9900"/>
 	<osd x="0" y="-120" w="230" h="60" font_size="840" type="text" label='${navigation.item.destination_length[named]} ' enable_expression="navigation.nav_status&gt;=3" background_color="#00000090" align="8" text_color="#00FF00"/>
@@ -462,10 +459,9 @@
 	<itemgra item_types="poi_attraction" order="15-"><icon src="attraction" w="48" h="48" x="48" y="24"/><circle text_size="32" color="#790079"/></itemgra>
 </layer>
 <layer name="sport">
-	<itemgra item_types="poi_stadium" order="10"><icon src="stadium" w="48" h="48" x="24" y="24"/></itemgra>
-	<itemgra item_types="poi_stadium" order="11-14"><icon src="stadium" w="64" h="64" x="32" y="32"/></itemgra>
-	<itemgra item_types="poi_stadium" order="15-16"><icon src="stadium" w="96" h="96" x="48" y="48"/><circle text_size="32" color="#107000"/></itemgra>
-	<itemgra item_types="poi_stadium" order="17-"><icon src="stadium" w="128" h="128" x="64" y="64"/><circle text_size="32" color="#107000"/></itemgra>
+	<itemgra item_types="poi_stadium" order="10-12"><icon src="stadium" w="48" h="48" x="24" y="24"/></itemgra>
+	<itemgra item_types="poi_stadium" order="13-15"><icon src="stadium" w="64" h="64" x="32" y="32"/></itemgra>
+	<itemgra item_types="poi_stadium" order="16-"><icon src="stadium" w="96" h="96" x="48" y="48"/><circle text_size="32" color="#107000"/></itemgra>
 	<itemgra item_types="poly_sports_track" order="11-12"><polyline color="#E37E64" width="4"/></itemgra>
 	<itemgra item_types="poly_sports_track" order="13-14"><polyline color="#E37E64EE" width="8"/></itemgra>
 	<itemgra item_types="poly_sports_track" order="15-16"><polyline color="#E37E64DD" width="18"/><text text_size="28" color="#007860"/><circle text_size="28" color="#006677"/></itemgra>
@@ -679,8 +675,6 @@
 	<itemgra item_types="barrier_cycle" order="17-"><icon src="menu" w="64" h="64" x="32" y="32"/></itemgra>
 	<itemgra item_types="poi_vending_machine" order="15-16"><icon src="wifi" w="48" h="48" x="24" y="48"/></itemgra>
 	<itemgra item_types="poi_vending_machine" order="17-"><icon src="wifi" w="64" h="64" x="32" y="64"/><circle text_size="32" color="#606060"/></itemgra>
-	<itemgra item_types="poi_bicycle_parking" order="15-16"><icon src="bicycle_parking" w="48" h="48" x="24" y="24"/></itemgra>
-	<itemgra item_types="poi_bicycle_parking" order="17-"><icon src="bicycle_parking" w="64" h="64" x="32" y="64"/><circle text_size="32" color="#0000FF"/></itemgra>
 	<itemgra item_types="poi_car_parking" order="13-14"><icon src="parking" w="32" h="32" x="16" y="16"/></itemgra>
 	<itemgra item_types="poi_car_parking" order="13-14"><icon src="parking" w="32" h="32" x="16" y="16"/></itemgra>
 	<itemgra item_types="poi_car_parking" order="15-16"><icon src="parking" w="32" h="32" x="16" y="16"/></itemgra>
@@ -988,7 +982,7 @@
 	<itemgra item_types="ditch" order="16-17"><polyline color="#8C6D5E" width="8"/><polyline color="#49C9C9" width="4"/></itemgra>
 	<itemgra item_types="ditch" order="18-"><polyline color="#8C6D5E" width="12"/><polyline color="#49C9C9" width="6"/><text color="#005099" text_size="32"/></itemgra>
 	<itemgra item_types="ferry" order="9-14"><polyline color="#0090CC" width="4"/></itemgra>
-	<itemgra item_types="ferry" order="15-16"><polyline color="#0090CCCC" width="20"/><text text_size="22" color="#B00000"/></itemgra>
+	<itemgra item_types="ferry" order="15-16"><polyline color="#0090CCCC" width="16"/><text text_size="22" color="#B00000"/></itemgra>
 	<itemgra item_types="ferry" order="17-"><polyline color="#0090CCAA" width="40"/><text text_size="42" color="#B00000"/></itemgra>
 	<itemgra item_types="rail_abandoned" order="13"><polyline color="#EDEBAA" width="2"/></itemgra>
 	<itemgra item_types="rail_abandoned" order="14-15"><polyline color="#EDEBAA" width="4"/></itemgra>
@@ -1036,12 +1030,13 @@
 	<itemgra item_types="selected_line" order="18-"><polyline color="#BA00B8" width="530"/></itemgra>
 </layer>
 <layer name="wayside">
-	<itemgra item_types="mini_roundabout" order="16"><circle color="#FFFFFF" radius="64" width="4"/></itemgra>
-	<itemgra item_types="mini_roundabout" order="17"><circle color="#FFFFFF" radius="98" width="6"/></itemgra>
-	<itemgra item_types="mini_roundabout" order="18"><circle color="#FFFFFF" radius="134" width="8"/></itemgra>
-	<itemgra item_types="turning_circle" order="15-16"><circle color="#757590" radius="38" width="6"/></itemgra>
-	<itemgra item_types="turning_circle" order="17"><circle color="#757590" radius="62" width="8"/></itemgra>
-	<itemgra item_types="turning_circle" order="18-"><circle color="#757590" radius="136" width="8"/></itemgra>
+	<itemgra item_types="mini_roundabout" order="16">	<circle color="#FFFFFF" radius="64" width="4"/></itemgra>
+	<itemgra item_types="mini_roundabout" order="17">	<circle color="#FFFFFF" radius="98" width="6"/></itemgra>
+	<itemgra item_types="mini_roundabout" order="18">	<circle color="#FFFFFF" radius="168" width="8"/></itemgra>
+	<itemgra item_types="turning_circle" order="14">	<circle color="#757590" radius="26" width="4"/></itemgra>
+	<itemgra item_types="turning_circle" order="15-16">	<circle color="#757590" radius="38" width="6"/></itemgra>
+	<itemgra item_types="turning_circle" order="17">	<circle color="#757590" radius="62" width="8"/></itemgra>
+	<itemgra item_types="turning_circle" order="18-">	<circle color="#757590" radius="136" width="8"/></itemgra>
 	<itemgra item_types="track_gravelled,track_paved" order="13"><polyline color="#80BB00" width="10"/></itemgra>
 	<itemgra item_types="track_gravelled,track_paved" order="14"><polyline color="#80BB00" width="16"/></itemgra>
 	<itemgra item_types="track_gravelled,track_paved" order="15-16"><polyline color="#80BB00" width="22"/></itemgra>
@@ -1062,10 +1057,11 @@
 	<itemgra item_types="street_pedestrian" order="15-16"><polyline color="#A8A8A8" width="30"/></itemgra>
 	<itemgra item_types="street_pedestrian" order="17"><polyline color="#A8A8A8" width="54"/></itemgra>
 	<itemgra item_types="street_pedestrian" order="18-"><polyline color="#A8A8A8" width="104"/></itemgra>
-	<itemgra item_types="footway_and_piste_nordic,footway,cycleway" order="14"><polyline color="#A8A8A8" width="12"/></itemgra>
-	<itemgra item_types="footway_and_piste_nordic,footway,cycleway" order="15-16"><polyline color="#A8A8A8" width="16"/></itemgra>
-	<itemgra item_types="footway_and_piste_nordic,footway,cycleway" order="17"><polyline color="#A8A8A8" width="28"/></itemgra>
-	<itemgra item_types="footway_and_piste_nordic,footway,cycleway" order="18-"><polyline color="#A8A8A8" width="42"/></itemgra>
+	<itemgra item_types="footway_and_piste_nordic,footway,cycleway" order="14">	<polyline color="#A8A8A8" width="8"/></itemgra>
+	<itemgra item_types="footway_and_piste_nordic,footway,cycleway" order="15">	<polyline color="#A8A8A8" width="12"/></itemgra>
+	<itemgra item_types="footway_and_piste_nordic,footway,cycleway" order="16">	<polyline color="#A8A8A8" width="16"/></itemgra>
+	<itemgra item_types="footway_and_piste_nordic,footway,cycleway" order="17">	<polyline color="#A8A8A8" width="28"/></itemgra>
+	<itemgra item_types="footway_and_piste_nordic,footway,cycleway" order="18-">	<polyline color="#A8A8A8" width="42"/></itemgra>
 	<itemgra item_types="path" order="13"><polyline color="#DEE6CC" width="12"/></itemgra>
 	<itemgra item_types="path" order="14"><polyline color="#DEE6CC" width="14"/></itemgra>
 	<itemgra item_types="path" order="15-16"><polyline color="#DEE6CC" width="18"/></itemgra>
@@ -1096,11 +1092,12 @@
 	<itemgra item_types="steps" order="15-16"><polyline color="#D10010" width="16"/><polyline color="#EDE7BB" width="10"/><text text_size="18" background_color="#EDE7BB"/></itemgra>
 	<itemgra item_types="steps" order="17"><polyline color="#D10010" width="26"/><polyline color="#EDE7BB" width="16"/><text text_size="24" background_color="#EDE7BB"/></itemgra>
 	<itemgra item_types="steps" order="18-"><polyline color="#D10010" width="42"/><polyline color="#EDE7BB" width="32"/><text text_size="32" background_color="#EDE7BB"/></itemgra>
-	<itemgra item_types="bus_guideway" order="13"><polyline color="#FF6000" width="12"/><polyline color="#9090AA" width="8"/></itemgra>
-	<itemgra item_types="bus_guideway" order="14"><polyline color="#FF6000" width="18"/><polyline color="#9090AA" width="12"/></itemgra>
-	<itemgra item_types="bus_guideway" order="15-16"><polyline color="#FF6000" width="28"/><polyline color="#9090AA" width="20"/><text text_size="22" background_color="#006393"/></itemgra>
-	<itemgra item_types="bus_guideway" order="17"><polyline color="#FF6000" width="46"/><polyline color="#9090AA" width="36"/><text text_size="38" background_color="#006393"/></itemgra>
-	<itemgra item_types="bus_guideway" order="18-"><polyline color="#FF6000" width="92"/><polyline color="#9090AA" width="80"/><text text_size="48" background_color="#006393"/></itemgra>
+	<itemgra item_types="bus_guideway" order="13">	<polyline color="#FF6000" width="5"/></itemgra>
+	<itemgra item_types="bus_guideway" order="14">	<polyline color="#FF6000" width="12"/>	<polyline color="#9090AA" width="8"/></itemgra>
+	<itemgra item_types="bus_guideway" order="15">	<polyline color="#FF6000" width="18"/>	<polyline color="#9090AA" width="12"/></itemgra>
+	<itemgra item_types="bus_guideway" order="16">	<polyline color="#FF6000" width="28"/>	<polyline color="#9090AA" width="20"/><text text_size="18" background_color="#990000"/></itemgra>
+	<itemgra item_types="bus_guideway" order="17">	<polyline color="#FF6000" width="46"/>	<polyline color="#9090AA" width="36"/><text text_size="28" background_color="#990000"/></itemgra>
+	<itemgra item_types="bus_guideway" order="18-">	<polyline color="#FF6000" width="92"/>	<polyline color="#9090AA" width="80"/><text text_size="38" background_color="#990000"/></itemgra>
 	<itemgra item_types="street_parking_lane" order="14"><polyline color="#707EFF" width="14"/></itemgra>
 	<itemgra item_types="street_parking_lane" order="15-16"><polyline color="#707EFF" width="24"/></itemgra>
 	<itemgra item_types="street_parking_lane" order="17"><polyline color="#707EFF" width="42"/></itemgra>
@@ -1163,7 +1160,7 @@
 	<itemgra item_types="street_n_lanes" order="12"><polyline color="#8888AA" width="16"/><text text_size="10" color="#FFFFFF" background_color="#00CC44"/></itemgra>
 	<itemgra item_types="street_n_lanes" order="13"><polyline color="#8888AA" width="18"/><text text_size="18" color="#FFFFFF" background_color="#00CC44"/></itemgra>
 	<itemgra item_types="street_n_lanes" order="14"><polyline color="#8888AA" width="22"/><text text_size="24" color="#FFFFFF" background_color="#00CC44"/></itemgra>
-	<itemgra item_types="street_n_lanes" order="15-16"><polyline color="#8888AA" width="36"/><polyline color="#FFFFFF" width="1" dash="40"/><text text_size="34" color="#FFFFFF" background_color="#00CC44"/></itemgra>
+	<itemgra item_types="street_n_lanes" order="15-16"><polyline color="#8888AA" width="36"/><polyline color="#FFFFFF" width="1" dash="40"/><text text_size="28" color="#FFFFFF" background_color="#00CC44"/></itemgra>
 	<itemgra item_types="street_n_lanes" order="17"><polyline color="#8888AA" width="62"/><polyline color="#FFFFFF" width="1" dash="50"/><text text_size="42" color="#FFFFFF" background_color="#00CC44"/></itemgra>
 	<itemgra item_types="street_n_lanes" order="18-"><polyline color="#8888AA" width="126"/><polyline color="#FFFFFF" width="1" dash="60"/><text text_size="56" color="#FFFFFF" background_color="#00CC44"/></itemgra>
 </layer>
@@ -1188,14 +1185,16 @@
 	<itemgra item_types="path" order="15-16"><polyline color="#A8A8A8" width="14"/><text text_size="18" background_color="#595959"/></itemgra>
 	<itemgra item_types="path" order="17"><polyline color="#A8A8A8" width="26"/><text text_size="26" background_color="#595959"/></itemgra>
 	<itemgra item_types="path" order="18-"><polyline color="#A8A8A8" width="42"/><text text_size="34" background_color="#595959"/></itemgra>
-	<itemgra item_types="footway,footway_and_piste_nordic" order="14"><polyline color="#DEE6CC" width="8"/></itemgra>
-	<itemgra item_types="footway,footway_and_piste_nordic" order="15-16"><polyline color="#DEE6CC" width="12"/><text text_size="18" background_color="#707151"/></itemgra>
-	<itemgra item_types="footway,footway_and_piste_nordic" order="17"><polyline color="#DEE6CC" width="20"/><text text_size="26" background_color="#707151"/></itemgra>
-	<itemgra item_types="footway,footway_and_piste_nordic" order="18-"><polyline color="#DEE6CC" width="34"/><text text_size="34" background_color="#707151"/></itemgra>
-	<itemgra item_types="cycleway" order="14"><polyline color="#99CC99" width="8"/></itemgra>
-	<itemgra item_types="cycleway" order="15-16"><polyline color="#99CC99" width="12"/><text text_size="18" background_color="#008525"/></itemgra>
-	<itemgra item_types="cycleway" order="17"><polyline color="#99CC99" width="20"/><text text_size="28" background_color="#008525"/></itemgra>
-	<itemgra item_types="cycleway" order="18-"><polyline color="#99CC99" width="34"/><text text_size="34" background_color="#008525"/></itemgra>
+	<itemgra item_types="footway,footway_and_piste_nordic" order="14">	<polyline color="#DEE6CC" width="6"/></itemgra>
+	<itemgra item_types="footway,footway_and_piste_nordic" order="15">	<polyline color="#DEE6CC" width="8"/></itemgra>
+	<itemgra item_types="footway,footway_and_piste_nordic" order="16">	<polyline color="#DEE6CC" width="12"/>	<text text_size="18" background_color="#707151"/></itemgra>
+	<itemgra item_types="footway,footway_and_piste_nordic" order="17">	<polyline color="#DEE6CC" width="20"/>	<text text_size="26" background_color="#707151"/></itemgra>
+	<itemgra item_types="footway,footway_and_piste_nordic" order="18-">	<polyline color="#DEE6CC" width="34"/>	<text text_size="34" background_color="#707151"/></itemgra>
+	<itemgra item_types="cycleway" order="14">	<polyline color="#B8E8B8" width="6"/></itemgra>
+	<itemgra item_types="cycleway" order="15">	<polyline color="#B8E8B8" width="8"/></itemgra>
+	<itemgra item_types="cycleway" order="16">	<polyline color="#B8E8B8" width="12"/>	<text text_size="18" background_color="#008525"/></itemgra>
+	<itemgra item_types="cycleway" order="17">	<polyline color="#B8E8B8" width="20"/>	<text text_size="26" background_color="#008525"/></itemgra>
+	<itemgra item_types="cycleway" order="18-">	<polyline color="#B8E8B8" width="34"/>	<text text_size="34" background_color="#008525"/></itemgra>
 	<itemgra item_types="track_gravelled" order="12"><polyline color="#A8A8A8" width="6"/></itemgra>
 	<itemgra item_types="track_gravelled" order="13"><polyline color="#A8A8A8" width="8"/></itemgra>
 	<itemgra item_types="track_gravelled" order="14"><polyline color="#A8A8A8" width="10"/></itemgra>
@@ -1223,7 +1222,7 @@
 	<itemgra item_types="highway_land,highway_city" order="12"><polyline color="#777788" width="16"/><text text_size="10" color="#FFFFFF"/></itemgra>
 	<itemgra item_types="highway_land,highway_city" order="13"><polyline color="#777788" width="18"/><text text_size="18" color="#FFFFFF"/></itemgra>
 	<itemgra item_types="highway_land,highway_city" order="14"><polyline color="#777788" width="24"/><text text_size="24" color="#FFFFFF"/></itemgra>
-	<itemgra item_types="highway_land,highway_city" order="15-16"><polyline color="#777788" width="38"/><polyline color="#FFFFFF" width="1" dash="40"/><text text_size="34" color="#FFFFFF"/></itemgra>
+	<itemgra item_types="highway_land,highway_city" order="15-16"><polyline color="#777788" width="38"/><polyline color="#FFFFFF" width="1" dash="40"/><text text_size="28" color="#FFFFFF"/></itemgra>
 	<itemgra item_types="highway_land,highway_city" order="17"><polyline color="#777788" width="64"/><polyline color="#FFFFFF" width="1" dash="50"/><text text_size="42" color="#FFFFFF"/></itemgra>
 	<itemgra item_types="highway_land,highway_city" order="18-"><polyline color="#777788" width="128"/><polyline color="#FFFFFF" width="1" dash="60"/><text text_size="56" color="#FFFFFF"/></itemgra>
 	<itemgra item_types="poly_car_parking" order="12-14"><polygon color="#F0F0CCBB"/><polyline color="#707EFF" width="4"/></itemgra>
@@ -1239,25 +1238,26 @@
 <layer name="highway_2">
 	<itemgra item_types="street_parking_lane" order="13"><polyline color="#707EFF" width="4"/></itemgra>
 	<itemgra item_types="street_parking_lane" order="14"><polyline color="#AAAADD" width="8"/></itemgra>
-	<itemgra item_types="street_parking_lane" order="15-16"><polyline color="#AAAADD" width="16"/><text text_size="20" background_color="#707EFF"/></itemgra>
-	<itemgra item_types="street_parking_lane" order="17"><polyline color="#AAAADD" width="32"/><text text_size="32" background_color="#707EFF"/></itemgra>
-	<itemgra item_types="street_parking_lane" order="18-"><polyline color="#AAAADD" width="68"/><text text_size="42" background_color="#707EFF"/></itemgra>
+	<itemgra item_types="street_parking_lane" order="15-16"><polyline color="#AAAADD" width="16"/><text text_size="18" background_color="#707EFF"/></itemgra>
+	<itemgra item_types="street_parking_lane" order="17"><polyline color="#AAAADD" width="32"/><text text_size="28" background_color="#707EFF"/></itemgra>
+	<itemgra item_types="street_parking_lane" order="18-"><polyline color="#AAAADD" width="68"/><text text_size="38" background_color="#707EFF"/></itemgra>
 	<itemgra item_types="street_pedestrian" order="12"><polyline color="#DEE6CC" width="6"/></itemgra>
 	<itemgra item_types="street_pedestrian" order="13"><polyline color="#DEE6CC" width="8"/></itemgra>
 	<itemgra item_types="street_pedestrian" order="14"><polyline color="#DEE6CC" width="12"/></itemgra>
 	<itemgra item_types="street_pedestrian" order="15-16"><polyline color="#DEE6CC" width="24"/><text text_size="20" background_color="#707000"/></itemgra>
 	<itemgra item_types="street_pedestrian" order="17"><polyline color="#DEE6CC" width="46"/><text text_size="32" background_color="#707000"/></itemgra>
-	<itemgra item_types="street_pedestrian" order="18-"><polyline color="#DEE6CC" width="94"/><text text_size="46" background_color="#707000"/></itemgra>
+	<itemgra item_types="street_pedestrian" order="18-"><polyline color="#DEE6CC" width="94"/><text text_size="42" background_color="#707000"/></itemgra>
 	<itemgra item_types="street_service" order="12"><polyline color="#C79999" width="4"/></itemgra>
 	<itemgra item_types="street_service" order="13"><polyline color="#94A4C4" width="8"/></itemgra>
 	<itemgra item_types="street_service" order="14"><polyline color="#94A4C4" width="10"/></itemgra>
-	<itemgra item_types="street_service" order="15-16"><polyline color="#94A4C4" width="16"/><text text_size="20" color="#C77777" background_color="#000000"/></itemgra>
+	<itemgra item_types="street_service" order="15-16"><polyline color="#94A4C4" width="16"/><text text_size="18" color="#C77777" background_color="#000000"/></itemgra>
 	<itemgra item_types="street_service" order="17"><polyline color="#94A4C4" width="34"/><text text_size="28" color="#C77777" background_color="#000000"/></itemgra>
 	<itemgra item_types="street_service" order="18-"><polyline color="#94A4C4" width="74"/><text text_size="38" color="#C77777" background_color="#000000"/></itemgra>
-	<itemgra item_types="turning_circle" order="15-16"><circle color="#CCDDEE" radius="26" width="12"/></itemgra>
-	<itemgra item_types="turning_circle" order="17"><circle color="#CCDDEE" radius="40" width="24"/></itemgra>
-	<itemgra item_types="turning_circle" order="18-"><circle color="#CCDDEE" radius="80" width="56"/></itemgra>
-	<itemgra item_types="street_0" order="12"><polyline color="#CCDDEE" width="6"/></itemgra>
+	<itemgra item_types="turning_circle" order="14">	<circle color="#CCDDEE" radius="18" width="8"/></itemgra>
+	<itemgra item_types="turning_circle" order="15-16">	<circle color="#CCDDEE" radius="26" width="12"/></itemgra>
+	<itemgra item_types="turning_circle" order="17">	<circle color="#CCDDEE" radius="40" width="24"/></itemgra>
+	<itemgra item_types="turning_circle" order="18-">	<circle color="#CCDDEE" radius="80" width="56"/></itemgra>
+	<itemgra item_types="street_0" order="12"><polyline color="#CCDDEE" width="4"/></itemgra>
 	<itemgra item_types="street_0" order="13"><polyline color="#CCDDEE" width="8"/></itemgra>
 	<itemgra item_types="street_0" order="14"><polyline color="#CCDDEE" width="12"/></itemgra>
 	<itemgra item_types="street_0" order="15-16"><polyline color="#CCDDEE" width="24"/><text text_size="18" color="#7A7AFF" background_color="#5055BB"/></itemgra>
@@ -1275,7 +1275,7 @@
 	<itemgra item_types="living_street" order="15-16"><polyline color="#CCDDEE" width="26"/><text text_size="24" color="#000000" background_color="#FFFF00"/></itemgra>
 	<itemgra item_types="living_street" order="17"><polyline color="#CCDDEE" width="48"/><text text_size="32" color="#000000" background_color="#FFFF00"/></itemgra>
 	<itemgra item_types="living_street" order="18-"><polyline color="#CCDDEE" width="94"/><text text_size="42" color="#000000" background_color="#FFFF00"/></itemgra>
-	<itemgra item_types="street_2_land,street_2_city" order="10-11"><polyline color="#C27979" width="6"/></itemgra>
+	<itemgra item_types="street_2_land,street_2_city" order="10-11"><polyline color="#C28888" width="6"/></itemgra>
 	<itemgra item_types="street_2_land,street_2_city" order="12"><polyline color="#BCBCDE" width="10"/><text text_size="4" color="#700033" background_color="#590029"/></itemgra>
 	<itemgra item_types="street_2_land,street_2_city" order="13"><polyline color="#BCBCDE" width="14"/><text text_size="6" color="#700033" background_color="#590029"/></itemgra>
 	<itemgra item_types="street_2_land,street_2_city" order="14"><polyline color="#BCBCDE" width="16"/><text text_size="10" color="#700033" background_color="#590029"/></itemgra>
@@ -1295,16 +1295,19 @@
 	<itemgra item_types="street_4_land,street_4_city" order="10-11"><polyline color="#FF9600" width="10"/></itemgra>
 	<itemgra item_types="street_4_land,street_4_city" order="12"><polyline color="#9797B3" width="14"/><text text_size="6" color="#FFCC00" background_color="#FFCC00"/></itemgra>
 	<itemgra item_types="street_4_land,street_4_city" order="13"><polyline color="#9797B3" width="18"/><text text_size="10" color="#FFCC00" background_color="#FFCC00"/></itemgra>
-	<itemgra item_types="street_4_land,street_4_city" order="14"><polyline color="#9797B3" width="22"/><text text_size="20" color="#FFCC00" background_color="#997700"/></itemgra>
+	<itemgra item_types="street_4_land,street_4_city" order="14"><polyline color="#9797B3" width="22"/><text text_size="18" color="#FFCC00" background_color="#997700"/></itemgra>
 	<itemgra item_types="street_4_land,street_4_city" order="15-16"><polyline color="#9797B3" width="34"/><polyline color="#FFFFFF" width="1" dash="40"/><text text_size="24" color="#FFCC00" background_color="#997700"/></itemgra>
 	<itemgra item_types="street_4_land,street_4_city" order="17"><polyline color="#9797B3" width="62"/><polyline color="#FFFFFF" width="1" dash="50"/><text text_size="36" color="#FFCC00" background_color="#997700"/></itemgra>
 	<itemgra item_types="street_4_land,street_4_city" order="18-"><polyline color="#9797B3" width="126"/><polyline color="#FFFFFF" width="1" dash="60"/><text text_size="52" color="#FFCC00" background_color="#997700"/></itemgra>
-	<itemgra item_types="mini_roundabout" order="15-16"><circle color="#94A4C4" radius="46" width="20"/><circle color="#FFFD70CC" radius="20" width="8"/></itemgra>
-	<itemgra item_types="mini_roundabout" order="17"><circle color="#94A4C4" radius="61" width="34"/><circle color="#FFFD70CC" radius="28" width="10"/></itemgra>
-	<itemgra item_types="mini_roundabout" order="18"><circle color="#94A4C4" radius="90" width="46"/><circle color="#FFFD70CC" radius="34" width="12"/></itemgra>
+	<itemgra item_types="mini_roundabout" order="14-15">	<circle color="#FFFD70DD" radius="20" width="6"/></itemgra>
+	<itemgra item_types="mini_roundabout" order="16">	<circle color="#94A4C4" radius="46" width="20"/>	<circle color="#FFFD70CC" radius="20" width="8"/></itemgra>
+	<itemgra item_types="mini_roundabout" order="17">	<circle color="#94A4C4" radius="61" width="34"/>	<circle color="#FFFD70CC" radius="28" width="10"/></itemgra>
+	<itemgra item_types="mini_roundabout" order="18">	<circle color="#94A4C4" radius="116" width="56"/>	<circle color="#FFFD70CC" radius="40" width="12"/></itemgra>
 	<itemgra item_types="street_nopass" order="13"><polyline color="#333333" width="8"/><polyline color="#FF4040" width="4"/></itemgra>
 	<itemgra item_types="street_nopass" order="14-15"><polyline color="#333333" width="20"/><polyline color="#FF4040" width="12"/></itemgra>
 	<itemgra item_types="street_nopass" order="16-"><polyline color="#333333" width="40"/><polyline color="#FF4040" width="30"/></itemgra>
+	<itemgra item_types="traffic_sign_city_limit" order="13-14">	<icon src="country_aq" w="64" h="32" x="32" y="16"/></itemgra>
+	<itemgra item_types="traffic_sign_city_limit" order="15-">		<icon src="country_aq" w="400" h="48" x="6" y="24"/>	<circle text_size="28" color="#000000"/></itemgra>
 </layer>
 <layer name="line">
 	<itemgra item_types="poly_attraction" order="13-14"><polyline color="#CA66CAAA" width="6"/></itemgra>
@@ -1380,6 +1383,8 @@
 	<itemgra item_types="poi_peak" order="17-"><icon src="peak" w="96" h="96"/></itemgra>
 </layer>
 <layer name="station">
+	<itemgra item_types="poi_bicycle_parking" order="15-16"><icon src="bicycle_parking" w="48" h="48"/></itemgra>
+	<itemgra item_types="poi_bicycle_parking" order="17-"><icon src="bicycle_parking" w="64" h="64" x="32" y="64"/><circle text_size="32" color="#0000FF"/></itemgra>
 	<itemgra item_types="poi_heliport" order="15-16"><icon src="heliport" w="64" h="64"/></itemgra>
 	<itemgra item_types="poi_heliport" order="17-"><icon src="heliport" w="96" h="96" x="64" y="48"/><circle text_size="32" color="#004000"/></itemgra>
 	<itemgra item_types="rail_mono" order="14"><polyline color="#FFEAAA" width="6"/><polyline color="#FFEAAA" width="4"/></itemgra>
@@ -1396,8 +1401,8 @@
 	<itemgra item_types="poi_taxi" order="14"><icon src="taxi" w="32" h="32"/></itemgra>
 	<itemgra item_types="poi_taxi" order="15-16"><icon src="taxi" w="48" h="48"/></itemgra>
 	<itemgra item_types="poi_taxi" order="17-"><icon src="taxi" w="64" h="64" x="0" y="88"/><circle text_size="32" color="#990000" background_color="#990000"/></itemgra>
-	<itemgra item_types="poi_bus_stop" order="14"><icon src="bus_stop" w="48" h="48" x="24" y="24"/></itemgra>
-	<itemgra item_types="poi_bus_stop" order="15-16"><icon src="bus_stop" w="64" h="64" x="32" y="32"/></itemgra>
+	<itemgra item_types="poi_bus_stop" order="14"><icon src="bus_stop" w="48" h="48"/></itemgra>
+	<itemgra item_types="poi_bus_stop" order="15-16"><icon src="bus_stop" w="64" h="64"/></itemgra>
 	<itemgra item_types="poi_bus_stop" order="17-"><icon src="bus_stop" w="96" h="96" x="48" y="48"/><circle text_size="32" color="#129D33" background_color="#129D33"/></itemgra>
 	<itemgra item_types="poi_bus_station" order="14"><icon src="bus" w="48" h="48"/></itemgra>
 	<itemgra item_types="poi_bus_station" order="15-16"><icon src="bus" w="64" h="64"/></itemgra>
@@ -1473,123 +1478,124 @@
 	<itemgra item_types="poi_level_crossing" order="15-16"><icon src="train_crossing" w="32" h="32"/></itemgra>
 	<itemgra item_types="poi_level_crossing" order="17-"><icon src="train_crossing" w="48" h="48"/></itemgra>
 	<itemgra item_types="highway_exit" order="12-13"><icon src="exit" w="48" h="48"/></itemgra>
-	<itemgra item_types="highway_exit" order="14-"><icon src="exit" w="64" h="64"/><circle color="#0000B0" text_size="36"/></itemgra>
+	<itemgra item_types="highway_exit" order="14-"><icon src="exit" w="64" h="64" x="32" y="0"/><circle color="#0000B0" text_size="36"/></itemgra>
 </layer>
-<layer name="world_labels_bevore">
-	<itemgra item_types="town_label_1e2,town_label_2e2" order="11"><circle text_size="32" color="#000000"/></itemgra>
-	<itemgra item_types="town_label_2e3,town_label_5e2,town_label_1e3" order="10"><circle text_size="32" color="#000000"/></itemgra>
-	<itemgra item_types="town_label_5e3" order="8"><circle text_size="28" color="#000000"/></itemgra>
-	<itemgra item_types="town_label_1e4" order="7-8"><circle text_size="32" color="#000000"/></itemgra>
-	<itemgra item_types="town_label_2e4" order="6-7"><circle text_size="28" color="#000000"/></itemgra>
-	<itemgra item_types="town_label_5e4" order="5-7"><circle text_size="32" color="#000000" radius="10" width="3"/></itemgra>
-	<itemgra item_types="town_label_1e5,town_label_2e5" order="4"><circle text_size="26" color="#000000" radius="10" width="3"/></itemgra>
-	<itemgra item_types="town_label_1e5,town_label_2e5" order="5"><circle text_size="32" color="#000000" radius="10" width="3"/></itemgra>
-	<itemgra item_types="town_label_1e5,town_label_2e5" order="6-7"><circle text_size="34" color="#000000" radius="10" width="3"/></itemgra>
-	<itemgra item_types="town_label_5e5" order="4-5"><circle text_size="32" color="#000000" radius="12" width="3"/></itemgra>
-	<itemgra item_types="town_label_1e6,town_label_2e6" order="4"><circle text_size="34" color="#000000" radius="16" width="4"/></itemgra>
-	<itemgra item_types="town_label_1e7" order="1-2"><circle text_size="18" color="#000000" radius="12" width="3"/></itemgra>
-	<itemgra item_types="district_label_1e2,district_label_2e2,district_label_5e2" order="11"><circle text_size="34" color="#FFFFFF" background_color="#AA0000"/></itemgra>
-	<itemgra item_types="district_label_1e3,district_label_2e3,district_label_5e3" order="10"><circle text_size="34" color="#FFFFFF" background_color="#AA0000"/></itemgra>
-	<itemgra item_types="district_label_1e3,district_label_2e3,district_label_5e3" order="11"><circle text_size="42" color="#FFFFFF" background_color="#AA0000"/></itemgra>
-	<itemgra item_types="district_label_5e4" order="9"><circle text_size="34" color="#FFFFFF" background_color="#AA0000"/></itemgra>
-	<itemgra item_types="district_label_1e4,district_label_2e4,district_label_5e4" order="10"><circle text_size="42" color="#FFFFFF" background_color="#AA0000"/></itemgra>
-	<itemgra item_types="district_label_2e5,district_label_5e5" order="8"><circle text_size="36" color="#FFFFFF" background_color="#AA0000"/></itemgra>
-	<itemgra item_types="district_label_1e5" order="9"><circle text_size="36" color="#FFFFFF" background_color="#AA0000"/></itemgra>
-	<itemgra item_types="district_label_1e6,district_label_2e6,district_label_5e6" order="7"><circle text_size="36" color="#FFFFFF" background_color="#AA0000"/></itemgra>
-	<itemgra item_types="district_label_1e7" order="6-7"><circle text_size="42" color="" background_color="#AA0000"/></itemgra>
-	<itemgra item_types="poi_tunnel" order="14-16"><circle text_size="32" color="#781178"/></itemgra>
-	<itemgra item_types="poi_custom3" order="10-12"><circle text_size="26" color="#990099"/></itemgra>
-	<itemgra item_types="poi_custom3" order="13-16"><circle text_size="32" color="#990099"/></itemgra>
-	<itemgra item_types="poi_custom5" order="12-14"><circle text_size="32" color="#0000FF"/></itemgra>
-</layer>
-<layer name="world_labels">
-	<itemgra item_types="poi_customb" order="7-14"><circle text_size="32" color="#990099"/></itemgra>
-	<itemgra item_types="district_label_1e4,district_label_2e4,district_label_5e4" order="11"><circle text_size="46" color="" background_color="#AA0000"/></itemgra>
-	<itemgra item_types="district_label_1e5,district_label_2e5,district_label_5e5" order="10"><circle text_size="46" color="" background_color="#AA0000"/></itemgra>
-	<itemgra item_types="district_label_1e5,district_label_2e5,district_label_5e5" order="11"><circle text_size="52" color="" background_color="#AA0000"/></itemgra>
-	<itemgra item_types="district_label_1e6,district_label_2e6,district_label_5e6" order="8-9"><circle text_size="42" color="" background_color="#AA0000"/></itemgra>
-	<itemgra item_types="district_label_1e6,district_label_2e6,district_label_5e6" order="10-11"><circle text_size="60" color="" background_color="#AA0000"/></itemgra>
-	<itemgra item_types="district_label_1e7" order="8-9"><circle text_size="48" color="" background_color="#AA0000"/></itemgra>
-	<itemgra item_types="district_label_1e7" order="10-11"><circle text_size="64" color="" background_color="#AA0000"/></itemgra>
-	<itemgra item_types="town_label_5e2" order="11"><circle text_size="34" color="#000000"/></itemgra>
-	<itemgra item_types="town_label_5e3" order="9-10"><circle text_size="32" color="#000000"/></itemgra>
-	<itemgra item_types="town_label_1e3,town_label_2e3,town_label_5e3" order="11"><circle text_size="36" color="#000000"/></itemgra>
-	<itemgra item_types="town_label_2e4" order="8"><circle text_size="34" color="#000000"/></itemgra>
-	<itemgra item_types="town_label_1e4,town_label_2e4" order="9-10"><circle text_size="34" background_color="#000000"/></itemgra>
-	<itemgra item_types="town_label_1e4,town_label_2e4" order="11"><circle text_size="38" background_color="#000000"/></itemgra>
-	<itemgra item_types="town_label_5e4" order="8-10"><circle text_size="36" background_color="#000000"/></itemgra>
-	<itemgra item_types="town_label_5e4" order="11"><circle text_size="42" background_color="#000000"/></itemgra>
-	<itemgra item_types="town_label_1e5,town_label_2e5" order="8-10"><circle text_size="42" background_color="#000000"/></itemgra>
-	<itemgra item_types="town_label_1e5,town_label_2e5" order="11"><circle text_size="46" background_color="#000000"/></itemgra>
-	<itemgra item_types="town_label_5e5" order="6"><circle text_size="36" color="#000000" radius="14" width="3"/></itemgra>
-	<itemgra item_types="town_label_5e5" order="7-10"><circle text_size="42" background_color="#000000"/></itemgra>
-	<itemgra item_types="town_label_5e5" order="11"><circle text_size="46" background_color="#000000"/></itemgra>
-	<itemgra item_types="town_label_1e6,town_label_2e6" order="5-6"><circle text_size="38" color="#000000" radius="16" width="4"/></itemgra>
-	<itemgra item_types="town_label_1e6,town_label_2e6" order="7-11"><circle text_size="48" background_color="#000000"/></itemgra>
-	<itemgra item_types="town_label_5e6" order="4"><circle text_size="38" color="#000000" radius="20" width="5"/></itemgra>
-	<itemgra item_types="town_label_5e6" order="5-6"><circle text_size="42" background_color="#000000" radius="20" width="5"/></itemgra>
-	<itemgra item_types="town_label_5e6" order="7-11"><circle text_size="52" background_color="#000000"/></itemgra>
-	<itemgra item_types="town_label_1e7" order="3"><circle text_size="28" color="#000000" radius="20" width="5"/></itemgra>
-	<itemgra item_types="town_label_1e7" order="4"><circle text_size="42" color="#000000" radius="22" width="6"/></itemgra>
-	<itemgra item_types="town_label_1e7" order="5-6"><circle text_size="48" background_color="#000000" radius="22" width="6"/></itemgra>
-	<itemgra item_types="town_label_1e7" order="7-11"><circle text_size="52" background_color="#000000"/></itemgra>
-	<itemgra item_types="poi_customb" order="-1"><circle color="#990099" radius="14" width="3"/></itemgra>
-	<itemgra item_types="poi_customb" order="2-4"><circle text_size="22" color="#990099"/></itemgra>
-	<itemgra item_types="poi_customb" order="5-6"><circle text_size="28" color="#990099"/></itemgra>
-	<itemgra item_types="found_item" order="11-14"><circle color="#FF00BB" radius="28" width="4"/></itemgra>
-	<itemgra item_types="found_item" order="15-16"><circle text_size="24" color="#660044" background_color="#FF00BB" radius="46" width="4"/></itemgra>
-	<itemgra item_types="found_item" order="17-"><circle text_size="32" color="#660044" background_color="#FF00BB" radius="72" width="4"/></itemgra>
-</layer>
-<layer name="labels_bevore">
-	<itemgra item_types="house_number" order="16"><circle text_size="26" background_color="#930093"/></itemgra>
-	<itemgra item_types="place_label" order="13"><circle text_size="28" color="#006565"/></itemgra>
-	<itemgra item_types="town_label,town_label_0e0,town_label_1e0,town_label_2e0,town_label_5e0" order="12-13"><circle text_size="34" color="#000000"/></itemgra>
-	<itemgra item_types="town_label_1e1,town_label_2e1,town_label_5e1" order="12"><circle text_size="38" color="#000000"/></itemgra>
-	<itemgra item_types="district_label,district_label_0e0" order="12"><circle text_size="32" color="#FFFFFF" background_color="#AA0000"/></itemgra>
-	<itemgra item_types="district_label_1e0,district_label_2e0,district_label_5e0" order="12"><circle text_size="38" color="#FFFFFF" background_color="#AA0000"/></itemgra>
-	<itemgra item_types="district_label_1e1,district_label_2e1,district_label_5e1" order="12"><circle text_size="46" color="" background_color="#AA0000"/></itemgra>
-	<itemgra item_types="district_label_1e2,district_label_2e2" order="12"><circle text_size="52" color="" background_color="#AA0000"/></itemgra>
-</layer>
-<layer name="labels">
-	<itemgra item_types="street_unkn" order="16"><text text_size="26"/></itemgra>
-	<itemgra item_types="street_unkn" order="17-"><text text_size="32"/></itemgra>
-	<itemgra item_types="house_number" order="17"><circle text_size="32" background_color="#930093"/></itemgra>
-	<itemgra item_types="house_number" order="18-"><circle text_size="38" background_color="#930093"/></itemgra>
-	<itemgra item_types="district_label" order="13"><circle text_size="36" color="" background_color="#AA0000"/></itemgra>
-	<itemgra item_types="district_label" order="14-15"><circle text_size="42" color="" background_color="#AA0000"/></itemgra>
-	<itemgra item_types="district_label" order="16-"><circle text_size="56" color="" background_color="#AA0000"/></itemgra>
-	<itemgra item_types="district_label_0e0,district_label_1e0,district_label_2e0,district_label_5e0" order="13-15"><circle text_size="42" color="" background_color="#AA0000"/></itemgra>
-	<itemgra item_types="district_label_0e0,district_label_1e0,district_label_2e0,district_label_5e0" order="16-"><circle text_size="60" color="" background_color="#AA0000"/></itemgra>
-	<itemgra item_types="district_label_1e1,district_label_2e1,district_label_5e1" order="13-16"><circle text_size="52" color="" background_color="#AA0000"/></itemgra>
-	<itemgra item_types="district_label_1e2,district_label_2e2,district_label_5e2" order="13-16"><circle text_size="56" color="" background_color="#AA0000"/></itemgra>
-	<itemgra item_types="district_label_1e3,district_label_2e3,district_label_5e3" order="12"><circle text_size="46" color="" background_color="#AA0000"/></itemgra>
-	<itemgra item_types="district_label_1e3,district_label_2e3,district_label_5e3" order="13-16"><circle text_size="60" color="" background_color="#AA0000"/></itemgra>
-	<itemgra item_types="district_label_1e4,district_label_2e4,district_label_5e4" order="12"><circle text_size="52" color="" background_color="#AA0000"/></itemgra>
-	<itemgra item_types="district_label_1e4,district_label_2e4,district_label_5e4" order="13-15"><circle text_size="64" color="" background_color="#AA0000"/></itemgra>
-	<itemgra item_types="district_label_1e5,district_label_2e5,district_label_5e5" order="12"><circle text_size="60" color="" background_color="#AA0000"/></itemgra>
-	<itemgra item_types="district_label_1e5,district_label_2e5,district_label_5e5" order="13-15"><circle text_size="72" color="" background_color="#AA0000"/></itemgra>
-	<itemgra item_types="district_label_1e6,district_label_2e6,district_label_5e6" order="12"><circle text_size="64" color="" background_color="#AA0000"/></itemgra>
-	<itemgra item_types="district_label_1e6,district_label_2e6,district_label_5e6" order="13-15"><circle text_size="78" color="" background_color="#AA0000"/></itemgra>
-	<itemgra item_types="district_label_1e7" order="12-14"><circle text_size="84" color="" background_color="#AA0000"/></itemgra>
-	<itemgra item_types="place_label" order="15-"><circle text_size="32" color="#006565"/></itemgra>
-	<itemgra item_types="town_label" order="14-"><circle text_size="32" color="#000000"/></itemgra>
-	<itemgra item_types="town_label_0e0,town_label_1e0,town_label_2e0" order="14-"><circle text_size="34" color="#000000"/></itemgra>
-	<itemgra item_types="town_label_5e0,town_label_1e1,town_label_2e1,town_label_5e1" order="13-"><circle text_size="36" color="#000000"/></itemgra>
-	<itemgra item_types="town_label_1e2,town_label_2e2,town_label_5e2" order="12-13"><circle text_size="36" color="#000000"/></itemgra>
-	<itemgra item_types="town_label_1e2,town_label_2e2,town_label_5e2" order="14-17"><circle text_size="42" background_color="#000000"/></itemgra>
-	<itemgra item_types="town_label_1e3,town_label_2e3,town_label_5e3" order="12-13"><circle text_size="36" color="#000000"/></itemgra>
-	<itemgra item_types="town_label_1e3,town_label_2e3,town_label_5e3" order="14-17"><circle text_size="42" background_color="#000000"/></itemgra>
-	<itemgra item_types="town_label_1e4,town_label_2e4" order="12-16"><circle text_size="42" background_color="#000000"/></itemgra>
-	<itemgra item_types="town_label_5e4" order="12-16"><circle text_size="46" background_color="#000000"/></itemgra>
-	<itemgra item_types="town_label_1e5,town_label_2e5" order="12-15"><circle text_size="52" background_color="#000000"/></itemgra>
-	<itemgra item_types="town_label_5e5" order="12-15"><circle text_size="52" background_color="#000000"/></itemgra>
-	<itemgra item_types="town_label_1e6,town_label_2e6" order="12-14"><circle text_size="56" background_color="#000000"/></itemgra>
-	<itemgra item_types="town_label_5e6" order="12-14"><circle text_size="56" background_color="#000000"/></itemgra>
-	<itemgra item_types="town_label_1e7" order="12-14"><circle text_size="60" background_color="#000000"/></itemgra>
-</layer>	<!-- Ende Universelle Layer -->
+	<!-- worldimage labels order="-11" -->
+	<layer name="world_labels_bevore">
+	<itemgra item_types="town_label_1e2,town_label_2e2" order="11">	<circle text_size="28" color="#000000"/></itemgra>
+	<itemgra item_types="town_label_1e3,town_label_2e3" order="10">	<circle text_size="28" color="#000000"/></itemgra>
+	<itemgra item_types="town_label_2e3" order="9">	<circle text_size="26" color="#000000"/></itemgra>
+	<itemgra item_types="town_label_5e3" order="8">		<circle text_size="26" color="#000000"/></itemgra>
+	<itemgra item_types="town_label_1e4" order="9">		<circle text_size="28" color="#000000"/></itemgra>
+	<itemgra item_types="town_label_2e4" order="8-9">	<circle text_size="28" color="#000000"/></itemgra>
+	<itemgra item_types="town_label_5e4" order="6-7">	<circle text_size="32" color="#000000" radius="10" width="3"/></itemgra>
+	<itemgra item_types="town_label_1e5,town_label_2e5" order="4-5">	<circle text_size="28" color="#000000" radius="10" width="3"/></itemgra>
+	<itemgra item_types="town_label_5e5" order="4-5">	<circle text_size="28" color="#000000" radius="12" width="3"/></itemgra>
+	<itemgra item_types="town_label_1e6,town_label_2e6" order="4">	<circle text_size="32" color="#000000" radius="10" width="3"/></itemgra>
+	<itemgra item_types="town_label_1e7" order="1-2">	<circle text_size="18" color="#000000" radius="12" width="3"/></itemgra>
+	<itemgra item_types="district_label_1e2,district_label_2e2,district_label_5e2" order="11">	<circle text_size="34" color="#FFFFFF" background_color="#AA0000"/></itemgra>
+	<itemgra item_types="district_label_1e3,district_label_2e3,district_label_5e3" order="10">	<circle text_size="32" color="#FFFFFF" background_color="#AA0000"/></itemgra>
+	<itemgra item_types="district_label_1e3,district_label_2e3,district_label_5e3" order="11">	<circle text_size="38" color="#FFFFFF" background_color="#AA0000"/></itemgra>
+	<itemgra item_types="district_label_5e4" order="9">	<circle text_size="34" color="#FFFFFF" background_color="#AA0000"/></itemgra>
+	<itemgra item_types="district_label_1e4,district_label_2e4,district_label_5e4" order="10">	<circle text_size="36" color="#FFFFFF" background_color="#AA0000"/></itemgra>
+	<itemgra item_types="district_label_2e5,district_label_5e5" order="8">	<circle text_size="34" color="#FFFFFF" background_color="#AA0000"/></itemgra>
+	<itemgra item_types="district_label_1e5,district_label_2e5,district_label_5e5" order="9">	<circle text_size="36" color="#FFFFFF" background_color="#AA0000"/></itemgra>
+	<itemgra item_types="district_label_1e6,district_label_2e6,district_label_5e6" order="7">	<circle text_size="38" color="#FFFFFF" background_color="#AA0000"/></itemgra>
+	<itemgra item_types="district_label_1e7" order="6-7">	<circle text_size="42" color="FFFFFF" background_color="#AA0000"/></itemgra>
+	<itemgra item_types="poi_tunnel" order="14-16">		<circle text_size="32" color="#781178"/></itemgra>
+	<itemgra item_types="poi_custom3" order="10-12">	<circle text_size="26" color="#990099"/></itemgra>
+	<itemgra item_types="poi_custom3" order="13-16">	<circle text_size="32" color="#990099"/></itemgra>
+	<itemgra item_types="poi_custom5" order="12-14">	<circle text_size="32" color="#0000FF"/></itemgra>
+	</layer>
+	<layer name="world_labels">
+	<itemgra item_types="poi_customb" order="7-14">	<circle text_size="32" color="#990099" radius="10" width="3"/></itemgra>
+	<itemgra item_types="poi_customb" order="15">	<icon src="$NAVIT_USER_DATADIR/maske/%s" w="128" h="128"/></itemgra>
+	<itemgra item_types="poi_customb" order="16">	<icon src="$NAVIT_USER_DATADIR/maske/%s" w="192" h="192"/></itemgra>
+	<itemgra item_types="poi_customb" order="17">	<icon src="$NAVIT_USER_DATADIR/maske/%s" w="256" h="256"/></itemgra>
+	<itemgra item_types="poi_customb" order="18-">	<icon src="$NAVIT_USER_DATADIR/maske/%s" w="342" h="342"/></itemgra>
+	<itemgra item_types="district_label_1e4,district_label_2e4,district_label_5e4" order="11">		<circle text_size="42" color="FFFFFF" background_color="#AA0000"/></itemgra>
+	<itemgra item_types="district_label_1e5,district_label_2e5,district_label_5e5" order="10-11">	<circle text_size="46" color="FFFFFF" background_color="#AA0000"/></itemgra>
+	<itemgra item_types="district_label_1e6,district_label_2e6,district_label_5e6" order="8-9">		<circle text_size="42" color="FFFFFF" background_color="#AA0000"/></itemgra>
+	<itemgra item_types="district_label_1e6,district_label_2e6,district_label_5e6" order="10-11">	<circle text_size="48" color="FFFFFF" background_color="#AA0000"/></itemgra>
+	<itemgra item_types="district_label_1e7" order="8-9">	<circle text_size="48" color="FFFFFF" background_color="#AA0000"/></itemgra>
+	<itemgra item_types="district_label_1e7" order="10-11">	<circle text_size="52" color="FFFFFF" background_color="#AA0000"/></itemgra>
+	<itemgra item_types="town_label_5e2" order="11">	<circle text_size="28" color="#000000"/></itemgra>
+	<itemgra item_types="town_label_1e3,town_label_2e3" order="11">	<circle text_size="28" color="#000000"/></itemgra>
+	<itemgra item_types="town_label_5e3" order="9-11">	<circle text_size="32" color="#000000"/></itemgra>
+	<itemgra item_types="town_label_2e4" order="9">		<circle text_size="32" color="#000000"/></itemgra>
+	<itemgra item_types="town_label_1e4,town_label_2e4" order="10-11">	<circle text_size="34" background_color="#000000"/></itemgra>
+	<itemgra item_types="town_label_5e4" order="8-11">	<circle text_size="36" background_color="#000000"/></itemgra>
+	<itemgra item_types="town_label_1e5,town_label_2e5" order="6-7">	<circle text_size="32" color="#000000" radius="10" width="3"/></itemgra>
+	<itemgra item_types="town_label_1e5,town_label_2e5" order="8-11">	<circle text_size="38" background_color="#000000"/></itemgra>
+	<itemgra item_types="town_label_5e5" order="6">		<circle text_size="32" background_color="#000000"/></itemgra>
+	<itemgra item_types="town_label_5e5" order="7-11">	<circle text_size="42" background_color="#000000"/></itemgra>
+	<itemgra item_types="town_label_1e6,town_label_2e6" order="5-6">	<circle text_size="38" background_color="#000000"/></itemgra>
+	<itemgra item_types="town_label_1e6,town_label_2e6" order="7-11">	<circle text_size="46" background_color="#000000"/></itemgra>
+	<itemgra item_types="town_label_5e6" order="4">		<circle text_size="38" color="#000000" radius="10" width="3"/></itemgra>
+	<itemgra item_types="town_label_5e6" order="5-6">	<circle text_size="42" background_color="#000000" radius="10" width="3"/></itemgra>
+	<itemgra item_types="town_label_5e6" order="7-11">	<circle text_size="48" background_color="#000000"/></itemgra>
+	<itemgra item_types="town_label_1e7" order="3">		<circle text_size="28" color="#000000" radius="10" width="3"/></itemgra>
+	<itemgra item_types="town_label_1e7" order="4">		<circle text_size="42" color="#000000" radius="10" width="3"/></itemgra>
+	<itemgra item_types="town_label_1e7" order="5-6">	<circle text_size="48" background_color="#000000" radius="10" width="3"/></itemgra>
+	<itemgra item_types="town_label_1e7" order="7-11">	<circle text_size="52" background_color="#000000"/></itemgra>
+	<itemgra item_types="poi_customb" order="-0">	<icon src="$NAVIT_USER_DATADIR/maske/%s" w="32" h="32" x="16" y="24"/></itemgra>
+	<itemgra item_types="poi_customb" order="1">	<icon src="$NAVIT_USER_DATADIR/maske/%s" w="48" h="48" x="48" y="40"/></itemgra>
+	<itemgra item_types="poi_customb" order="2-3">	<icon src="$NAVIT_USER_DATADIR/maske/%s" w="64" h="64" x="64" y="56"/></itemgra>
+	<itemgra item_types="poi_customb" order="4-5">	<icon src="$NAVIT_USER_DATADIR/maske/%s" w="96" h="96" x="96" y="80"/>		<circle text_size="18" color="#990099"/></itemgra>
+	<itemgra item_types="poi_customb" order="6">	<icon src="$NAVIT_USER_DATADIR/maske/%s" w="128" h="128" x="128" y="112"/>	<circle text_size="28" color="#990099"/></itemgra>
+	<itemgra item_types="found_item" order="11-14">	<circle color="#FF00BB" radius="28" width="4"/></itemgra>
+	<itemgra item_types="found_item" order="15-16">	<circle text_size="24" color="#660044" background_color="#FF00BB" radius="46" width="4"/></itemgra>
+	<itemgra item_types="found_item" order="17-">	<circle text_size="32" color="#660044" background_color="#FF00BB" radius="72" width="4"/></itemgra>
+	</layer>
+	<!-- labels order="12-" color=Individuell in Layouts -->
+	<layer name="labels_bevore">
+	<itemgra item_types="house_number" order="16">	<circle text_size="26" background_color="#930093"/></itemgra>
+	<itemgra item_types="place_label" order="13-14">	<circle text_size="28" color="#006565"/></itemgra>
+	<itemgra item_types="town_label,town_label_0e0,town_label_1e0,town_label_2e0,town_label_5e0" order="12-13">	<circle text_size="28" color="#000000"/></itemgra>
+	<itemgra item_types="town_label_1e1,town_label_2e1,town_label_5e1" order="12">	<circle text_size="32" color="#000000"/></itemgra>
+	<itemgra item_types="town_label_1e2,town_label_2e2,town_label_5e2" order="12">	<circle text_size="34" color="#000000"/></itemgra>
+	<itemgra item_types="district_label,district_label_0e0" order="12">	<circle text_size="32" color="" background_color="#AA0000"/></itemgra>
+	<itemgra item_types="district_label_1e0,district_label_2e0,district_label_5e0" order="12">	<circle text_size="38" color="" background_color="#AA0000"/></itemgra>
+	<itemgra item_types="district_label_1e1,district_label_2e1,district_label_5e1" order="12">	<circle text_size="42" color="" background_color="#AA0000"/></itemgra>
+	<itemgra item_types="district_label_1e2,district_label_2e2" order="12">	<circle text_size="48" color="" background_color="#AA0000"/></itemgra>
+	</layer>
+	<layer name="labels">
+	<itemgra item_types="street_unkn" order="16">	<text text_size="26"/></itemgra>
+	<itemgra item_types="street_unkn" order="17-">	<text text_size="32"/></itemgra>
+	<itemgra item_types="house_number" order="17">	<circle text_size="32" background_color="#930093"/></itemgra>
+	<itemgra item_types="house_number" order="18-">	<circle text_size="38" background_color="#930093"/></itemgra>
+	<itemgra item_types="district_label" order="13-15">	<circle text_size="38" color="" background_color="#AA0000"/></itemgra>
+	<itemgra item_types="district_label" order="16-">	<circle text_size="46" color="" background_color="#AA0000"/></itemgra>
+	<itemgra item_types="district_label_0e0,district_label_1e0,district_label_2e0,district_label_5e0" order="13-15">	<circle text_size="42" color="" background_color="#AA0000"/></itemgra>
+	<itemgra item_types="district_label_0e0,district_label_1e0,district_label_2e0,district_label_5e0" order="16-">		<circle text_size="48" color="" background_color="#AA0000"/></itemgra>
+	<itemgra item_types="district_label_1e1,district_label_2e1,district_label_5e1" order="13-16">	<circle text_size="48" color="" background_color="#AA0000"/></itemgra>
+	<itemgra item_types="district_label_1e2,district_label_2e2,district_label_5e2" order="13-16">	<circle text_size="52" color="" background_color="#AA0000"/></itemgra>
+	<itemgra item_types="district_label_1e3,district_label_2e3,district_label_5e3" order="12">		<circle text_size="46" color="" background_color="#AA0000"/></itemgra>
+	<itemgra item_types="district_label_1e3,district_label_2e3,district_label_5e3" order="13-16">	<circle text_size="56" color="" background_color="#AA0000"/></itemgra>
+	<itemgra item_types="district_label_1e4,district_label_2e4,district_label_5e4" order="12">		<circle text_size="52" color="" background_color="#AA0000"/></itemgra>
+	<itemgra item_types="district_label_1e4,district_label_2e4,district_label_5e4" order="13-15">	<circle text_size="60" color="" background_color="#AA0000"/></itemgra>
+	<itemgra item_types="district_label_1e5,district_label_2e5,district_label_5e5" order="12">		<circle text_size="60" color="" background_color="#AA0000"/></itemgra>
+	<itemgra item_types="district_label_1e5,district_label_2e5,district_label_5e5" order="13-15">	<circle text_size="64" color="" background_color="#AA0000"/></itemgra>
+	<itemgra item_types="district_label_1e6,district_label_2e6,district_label_5e6" order="12">		<circle text_size="64" color="" background_color="#AA0000"/></itemgra>
+	<itemgra item_types="district_label_1e6,district_label_2e6,district_label_5e6" order="13-15">	<circle text_size="72" color="" background_color="#AA0000"/></itemgra>
+	<itemgra item_types="district_label_1e7" order="12-14">	<circle text_size="84" color="" background_color="#AA0000"/></itemgra>
+	<itemgra item_types="place_label" order="15-">	<circle text_size="32" color="#006565"/></itemgra>
+	<itemgra item_types="town_label,town_label_0e0" order="14-">	<circle text_size="32" color="#000000"/></itemgra>
+	<itemgra item_types="town_label_1e0,town_label_2e0,town_label_5e0" order="14-">	<circle text_size="34" color="#000000"/></itemgra>
+	<itemgra item_types="town_label_1e1,town_label_2e1,town_label_5e1" order="13-">	<circle text_size="36" color="#000000"/></itemgra>
+	<itemgra item_types="town_label_1e2,town_label_2e2,town_label_5e2" order="13">	<circle text_size="38" color="#000000"/></itemgra>
+	<itemgra item_types="town_label_1e2,town_label_2e2,town_label_5e2" order="14-17">	<circle text_size="42" background_color="#000000"/></itemgra>
+	<itemgra item_types="town_label_1e3,town_label_2e3,town_label_5e3" order="12-13">	<circle text_size="42" color="#000000"/></itemgra>
+	<itemgra item_types="town_label_1e3,town_label_2e3,town_label_5e3" order="14-17">	<circle text_size="46" background_color="#000000"/></itemgra>
+	<itemgra item_types="town_label_1e4,town_label_2e4,town_label_5e4" order="12-16">	<circle text_size="48" background_color="#000000"/></itemgra>
+	<itemgra item_types="town_label_1e5,town_label_2e5,town_label_5e5" order="12-15">	<circle text_size="52" background_color="#000000"/></itemgra>
+	<itemgra item_types="town_label_1e6,town_label_2e6,town_label_5e6" order="12-14">	<circle text_size="56" background_color="#000000"/></itemgra>
+	<itemgra item_types="town_label_1e7" order="12-14">	<circle text_size="60" background_color="#000000"/></itemgra>
+	</layer>
+	<!-- Ende Universelle Layer -->
 
 <layout name="MOTORIST" nightlayout="DARKGLOW" color="#EEFFEE">
-<cursor w="154" h="160"><itemgra>
+<cursor w="190" h="190"><itemgra>
 	<polygon color="#0055FF"><coord x="4" y="80"/><coord x="34" y="74"/><coord x="34" y="-32"/><coord x="-26" y="-32"/><coord x="-26" y="74"/><coord x="4" y="80"/></polygon>
 	<circle color="#CCEEFF" radius="24" width="24"><coord x="4" y="36"/></circle>
 	<polygon color="#CCEEFF"><coord x="-16" y="-2"/><coord x="24" y="-2"/><coord x="28" y="-16"/><coord x="-20" y="-16"/><coord x="-16" y="-2"/></polygon>
@@ -1622,15 +1628,15 @@
 	<layer name="hiking_way" ref="hiking_way" active="0"/>
 	<layer name="up_street" ref="up_street" active="1"/>
 	<layer name="line" ref="line" active="0"/>
-	<layer name="POI Symbols" ref="POI Symbols" active="1"/>
+	<layer name="POI Symbols" ref="POI Symbols"/>
 	<layer name="wintersport" ref="wintersport" active="0"/>
-	<layer name="POI_Icons_full" ref="POI_Icons_full" active="0"/>
+	<layer name="Android-POI-Icons-full" ref="Android-POI-Icons-full" active="0"/>
 	<layer name="hiking" ref="hiking" active="0"/>
 	<layer name="leisure" ref="leisure" active="0"/>
 	<layer name="sport" ref="sport" active="0"/>
 	<layer name="gastro" ref="gastro" active="0"/>
 	<layer name="shop" ref="shop" active="0"/>
-	<layer name="station" ref="station" active="1"/>
+	<layer name="station" ref="station" active="0"/>
 	<layer name="poly_icon_label" ref="poly_icon_label" active="0"/>
 	<layer name="my" ref="my" active="0"/>
 	<layer name="Internal" ref="Internal"/>
@@ -1641,7 +1647,7 @@
 </layout>
 
 <layout name="MOTORIST_1" nightlayout="DARKGLOW" color="#EEFFEE">
-<cursor w="154" h="150"><itemgra speed_range="-2">
+<cursor w="190" h="190"><itemgra speed_range="-2">
 	<polyline color="#0055BB" radius="0" width="12"><coord x="0" y="0"/></polyline>
 	<circle color="#004080" radius="27" width="9"><coord x="0" y="0"/></circle>
 	<circle color="#0055BB" radius="39" width="9"><coord x="0" y="0"/></circle>
@@ -1671,15 +1677,15 @@
 	<layer name="hiking_way" ref="hiking_way" active="0"/>
 	<layer name="up_street" ref="up_street" active="1"/>
 	<layer name="line" ref="line" active="0"/>
-	<layer name="POI Symbols" ref="POI Symbols" active="1"/>
+	<layer name="POI Symbols" ref="POI Symbols"/>
 	<layer name="wintersport" ref="wintersport" active="0"/>
-	<layer name="POI_Icons_full" ref="POI_Icons_full" active="0"/>
+	<layer name="Android-POI-Icons-full" ref="Android-POI-Icons-full" active="0"/>
 	<layer name="hiking" ref="hiking" active="0"/>
 	<layer name="leisure" ref="leisure" active="0"/>
 	<layer name="sport" ref="sport" active="0"/>
 	<layer name="gastro" ref="gastro" active="0"/>
 	<layer name="shop" ref="shop" active="0"/>
-	<layer name="station" ref="station" active="1"/>
+	<layer name="station" ref="station" active="0"/>
 	<layer name="poly_icon_label" ref="poly_icon_label" active="0"/>
 	<layer name="my" ref="my" active="0"/>
 	<layer name="Internal" ref="Internal"/>
@@ -1690,7 +1696,7 @@
 </layout>
 
 <layout name="WALKER" color="#F0F0CC">
-<cursor w="154" h="150">
+<cursor w="190" h="190">
 	<itemgra speed_range="-2">
 	<polyline color="#00BC00" radius="0" width="12"><coord x="0" y="0"/></polyline><circle color="#008500" radius="27" width="9"><coord x="0" y="0"/></circle>
 	<circle color="#00BC00" radius="39" width="9"><coord x="0" y="0"/></circle><circle color="#008500" radius="54" width="9"><coord x="0" y="0"/></circle></itemgra>
@@ -1721,14 +1727,14 @@
 	<layer name="line" ref="line" active="1"/>
 	<layer name="POI Symbols" ref="POI Symbols" active="1"/>
 	<layer name="wintersport" ref="wintersport" active="0"/>
-	<layer name="POI_Icons_full" ref="POI_Icons_full" active="0"/>
+	<layer name="Android-POI-Icons-full" ref="Android-POI-Icons-full" active="0"/>
 	<layer name="hiking" ref="hiking" active="1"/>
 	<layer name="leisure" ref="leisure" active="0"/>
 	<layer name="sport" ref="sport" active="0"/>
 	<layer name="gastro" ref="gastro" active="0"/>
 	<layer name="shop" ref="shop" active="0"/>
 	<layer name="station" ref="station" active="1"/>
-	<layer name="poly_icon_label" ref="poly_icon_label" active="1"/>
+	<layer name="poly_icon_label" ref="poly_icon_label" active="0"/>
 	<layer name="my" ref="my" active="0"/>
 	<layer name="geocaching" active="0"/>
 	<layer name="Internal" ref="Internal"/>
@@ -1738,8 +1744,8 @@
 	<layer name="labels" ref="labels"/>
 </layout>
 
-<layout name="PAX" color="#ccffcc" order_delta="2">
-<cursor w="154" h="150">
+<layout name="PAX" color="#CCFFCC" order_delta="2">
+<cursor w="190" h="190">
 	<itemgra speed_range="-2">
 	<polyline color="#00BC00" radius="0" width="12"><coord x="0" y="0"/></polyline><circle color="#008500" radius="27" width="9"><coord x="0" y="0"/></circle>
 	<circle color="#00BC00" radius="39" width="9"><coord x="0" y="0"/></circle><circle color="#008500" radius="54" width="9"><coord x="0" y="0"/></circle></itemgra>
@@ -1965,8 +1971,8 @@
 	<itemgra item_types="street_2_land,street_2_city" order="20-"><polyline color="#BCBCDE" width="114"/><polyline color="#FFFFFF" width="1" dash="50"/><text text_size="48" color="#700033" background_color="#590029"/></itemgra>
 	<itemgra item_types="street_3_land,street_3_city" order="12"><polyline color="#9191AA" width="4"/></itemgra>
 	<itemgra item_types="street_3_land,street_3_city" order="13-14"><polyline color="#9191AA" width="8"/></itemgra>
-	<itemgra item_types="street_3_land,street_3_city" order="15"><polyline color="#9191AA" width="12"/><text text_size="6" color="#700033" background_color="#590029"/></itemgra>
-	<itemgra item_types="street_3_land,street_3_city" order="16"><polyline color="#9191AA" width="16"/><text text_size="10" color="#700033" background_color="#590029"/></itemgra>
+	<itemgra item_types="street_3_land,street_3_city" order="15"><polyline color="#9191AA" width="12"/><text text_size="6" color="#5000DD" background_color="#300088"/></itemgra>
+	<itemgra item_types="street_3_land,street_3_city" order="16"><polyline color="#9191AA" width="16"/><text text_size="10" color="#5000DD" background_color="#300088"/></itemgra>
 	<itemgra item_types="street_3_land,street_3_city" order="17"><polyline color="#9191AA" width="20"/><polyline color="#FFFFFF" width="1" dash="30"/><text text_size="18" color="#5000DD" background_color="#300088"/></itemgra>
 	<itemgra item_types="street_3_land,street_3_city" order="18"><polyline color="#9191AA" width="32"/><polyline color="#FFFFFF" width="1" dash="40"/><text text_size="26" color="#5000DD" background_color="#300088"/></itemgra>
 	<itemgra item_types="street_3_land,street_3_city" order="19"><polyline color="#9191AA" width="60"/><polyline color="#FFFFFF" width="1" dash="50"/><text text_size="36" color="#5000DD" background_color="#300088"/></itemgra>
@@ -1979,6 +1985,12 @@
 	<itemgra item_types="street_4_land,street_4_city" order="18"><polyline color="#9797B3" width="34"/><polyline color="#FFFFFF" width="1" dash="40"/><text text_size="28" color="#FFCC00" background_color="#997700"/></itemgra>
 	<itemgra item_types="street_4_land,street_4_city" order="19"><polyline color="#9797B3" width="62"/><polyline color="#FFFFFF" width="1" dash="50"/><text text_size="38" color="#FFCC00" background_color="#997700"/></itemgra>
 	<itemgra item_types="street_4_land,street_4_city" order="20-"><polyline color="#9797B3" width="126"/><polyline color="#FFFFFF" width="1" dash="60"/><text text_size="56" color="#FFCC00" background_color="#997700"/></itemgra>
+	<itemgra item_types="bus_guideway" order="13"><polyline color="#FF6000" width="4"/></itemgra>
+	<itemgra item_types="bus_guideway" order="14"><polyline color="#9090AA" width="8"/></itemgra>
+	<itemgra item_types="bus_guideway" order="15"><polyline color="#9090AA" width="12"/></itemgra>
+	<itemgra item_types="bus_guideway" order="16"><polyline color="#9090AA" width="20"/>	<text text_size="18" background_color="#990000"/></itemgra>
+	<itemgra item_types="bus_guideway" order="17"><polyline color="#9090AA" width="36"/>	<text text_size="28" background_color="#990000"/></itemgra>
+	<itemgra item_types="bus_guideway" order="18-"><polyline color="#9090AA" width="80"/>	<text text_size="38" background_color="#990000"/></itemgra>
 	<itemgra item_types="mini_roundabout" order="17"><circle color="#FFFD70DD" radius="20" width="6"/></itemgra>
 	<itemgra item_types="mini_roundabout" order="18"><circle color="#94A4C4" radius="46" width="20"/><circle color="#FFFD70CC" radius="20" width="8"/></itemgra>
 	<itemgra item_types="mini_roundabout" order="19"><circle color="#94A4C4" radius="61" width="34"/><circle color="#FFFD70CC" radius="28" width="10"/></itemgra>
@@ -2104,9 +2116,9 @@
 </layer>
 	<layer name="hiking_way" ref="hiking_way" active="0"/>
 	<layer name="up_street" ref="up_street" active="0"/>
-	<layer name="POI Symbols" ref="POI Symbols" active="0"/>
+	<layer name="POI Symbols" ref="POI Symbols"/>
 	<layer name="wintersport" ref="wintersport" active="0"/>
-	<layer name="POI_Icons_full" ref="POI_Icons_full" active="0"/>
+	<layer name="Android-POI-Icons-full" ref="Android-POI-Icons-full" active="0"/>
 	<layer name="hiking" ref="hiking" active="0"/>
 	<layer name="leisure" ref="leisure" active="0"/>
 	<layer name="sport" ref="sport" active="0"/>
@@ -2201,7 +2213,7 @@
 </layout>
 
 <layout name="CYCLIST" color="#D0F0D0">
-<cursor w="154" h="150">
+<cursor w="190" h="190">
 	<itemgra speed_range="-3">
 	<polyline color="#00BC00" radius="0" width="12"><coord x="0" y="0"/></polyline><circle color="#008500" radius="27" width="9"><coord x="0" y="0"/></circle>
 	<circle color="#00BC00" radius="39" width="9"><coord x="0" y="0"/></circle><circle color="#008500" radius="54" width="9"><coord x="0" y="0"/></circle></itemgra>
@@ -2230,9 +2242,9 @@
 	<layer name="hiking_way" ref="hiking_way" active="1"/>
 	<layer name="up_street" ref="up_street" active="1"/>
 	<layer name="line" ref="line" active="1"/>
-	<layer name="POI Symbols" ref="POI Symbols" active="1"/>
+	<layer name="POI Symbols" ref="POI Symbols"/>
 	<layer name="wintersport" ref="wintersport" active="0"/>
-	<layer name="POI_Icons_full" ref="POI_Icons_full" active="0"/>
+	<layer name="Android-POI-Icons-full" ref="Android-POI-Icons-full" active="0"/>
 	<layer name="hiking" ref="hiking" active="1"/>
 	<layer name="leisure" ref="leisure" active="0"/>
 	<layer name="sport" ref="sport" active="0"/>
@@ -2248,7 +2260,7 @@
 </layout>
 
 <layout name="DARKGLOW" color="#191919" daylayout="MOTORIST">
-<cursor w="154" h="160"><itemgra>
+<cursor w="190" h="190"><itemgra>
 	<polygon color="#FF0000"><coord x="4" y="80"/><coord x="34" y="74"/><coord x="34" y="-32"/><coord x="-26" y="-32"/><coord x="-26" y="74"/><coord x="4" y="80"/></polygon>
 	<circle color="#CCEEFF" radius="24" width="24"><coord x="4" y="36"/></circle>
 	<polygon color="#CCEEFF"><coord x="-16" y="-2"/><coord x="24" y="-2"/><coord x="28" y="-16"/><coord x="-20" y="-16"/><coord x="-16" y="-2"/></polygon>
@@ -2487,7 +2499,7 @@
 	<itemgra item_types="poi_fountain" order="17"><icon src="fountain" w="48" h="48"/></itemgra>
 	<itemgra item_types="poi_fountain" order="18-"><icon src="fountain" w="64" h="64"/></itemgra>
 </layer>
-	<layer name="POI Symbols" ref="POI Symbols" active="1"/>
+	<layer name="POI Symbols" ref="POI Symbols"/>
 	<layer name="wintersport" ref="wintersport" active="0"/>
 	<layer name="POI_Icons_full" ref="POI_Icons_full" active="0"/>
 	<layer name="hiking" ref="hiking" active="0"/>
@@ -2495,58 +2507,54 @@
 	<layer name="sport" ref="sport" active="0"/>
 	<layer name="gastro" ref="gastro" active="0"/>
 	<layer name="shop" ref="shop" active="0"/>
-	<layer name="station" ref="station" active="1"/>
+	<layer name="station" ref="station" active="0"/>
 	<layer name="poly_icon_label" ref="poly_icon_label" active="0"/>
 	<layer name="my" ref="my" active="0"/>
 	<layer name="Internal" ref="Internal"/>
 	<layer name="world_labels_bevore" ref="world_labels_bevore" active="0"/>
 	<layer name="world_labels" ref="world_labels"/>
-<layer name="labels_bevore">
-	<itemgra item_types="house_number" order="16"><circle text_size="26" color="#FF00FF"/></itemgra>
-	<itemgra item_types="place_label" order="13"><circle text_size="28" color="#00B3B3"/></itemgra>
-	<itemgra item_types="town_label,town_label_0e0,town_label_1e0,town_label_2e0,town_label_5e0" order="12-13"><circle text_size="34" color="#FFFFFF"/></itemgra>
-	<itemgra item_types="town_label_1e1,town_label_2e1,town_label_5e1" order="12"><circle text_size="38" color="#FFFFFF"/></itemgra>
-	<itemgra item_types="district_label,district_label_0e0" order="12"><circle text_size="32" color="#FF99BB" background_color="#AA0000"/></itemgra>
-	<itemgra item_types="district_label_1e0,district_label_2e0,district_label_5e0" order="12"><circle text_size="38" color="#FFFFFF" background_color="#FF99BB"/></itemgra>
-	<itemgra item_types="district_label_1e1,district_label_2e1,district_label_5e1" order="12"><circle text_size="46" color="" background_color="#FF99BB"/></itemgra>
-	<itemgra item_types="district_label_1e2,district_label_2e2" order="12"><circle text_size="52" color="" background_color="#FF99BB"/></itemgra>
+	<layer name="labels_bevore">
+	<itemgra item_types="house_number" order="16">	<circle text_size="26" color="#FF00FF"/></itemgra>
+	<itemgra item_types="place_label" order="13-14">	<circle text_size="28" color="#00B3B3"/></itemgra>
+	<itemgra item_types="town_label,town_label_0e0,town_label_1e0,town_label_2e0,town_label_5e0" order="12-13">	<circle text_size="28" color="#FFFFFF"/></itemgra>
+	<itemgra item_types="town_label_1e1,town_label_2e1,town_label_5e1" order="12">	<circle text_size="32" color="#FFFFFF"/></itemgra>
+	<itemgra item_types="district_label,district_label_0e0" order="12">	<circle text_size="32" color="#FF99BB" background_color="#AA0000"/></itemgra>
+	<itemgra item_types="district_label_1e0,district_label_2e0,district_label_5e0" order="12">	<circle text_size="38" color="" background_color="#FF99BB"/></itemgra>
+	<itemgra item_types="district_label_1e1,district_label_2e1,district_label_5e1" order="12">	<circle text_size="42" color="" background_color="#FF99BB"/></itemgra>
+	<itemgra item_types="district_label_1e2,district_label_2e2" order="12">	<circle text_size="48" color="" background_color="#FF99BB"/></itemgra>
 </layer>
 <layer name="labels">
-	<itemgra item_types="street_unkn" order="16"><text text_size="26" color="#A90000"/></itemgra>
-	<itemgra item_types="street_unkn" order="17-"><text text_size="32" color="#A90000"/></itemgra>
-	<itemgra item_types="house_number" order="17"><circle text_size="32" color="#FF00FF"/></itemgra>
-	<itemgra item_types="house_number" order="18-"><circle text_size="38" color="#FF00FF"/></itemgra>
-	<itemgra item_types="district_label" order="13"><circle text_size="36" color="" background_color="#FF99BB"/></itemgra>
-	<itemgra item_types="district_label" order="14-15"><circle text_size="42" color="" background_color="#FF99BB"/></itemgra>
-	<itemgra item_types="district_label" order="16-"><circle text_size="56" color="" background_color="#FF99BB"/></itemgra>
-	<itemgra item_types="district_label_0e0,district_label_1e0,district_label_2e0,district_label_5e0" order="13-15"><circle text_size="42" color="" background_color="#FF99BB"/></itemgra>
-	<itemgra item_types="district_label_0e0,district_label_1e0,district_label_2e0,district_label_5e0" order="16-"><circle text_size="60" color="" background_color="#FF99BB"/></itemgra>
-	<itemgra item_types="district_label_1e1,district_label_2e1,district_label_5e1" order="13-16"><circle text_size="52" color="" background_color="#FF99BB"/></itemgra>
-	<itemgra item_types="district_label_1e2,district_label_2e2,district_label_5e2" order="13-16"><circle text_size="56" color="" background_color="#FF99BB"/></itemgra>
-	<itemgra item_types="district_label_1e3,district_label_2e3,district_label_5e3" order="12"><circle text_size="46" color="" background_color="#FF99BB"/></itemgra>
-	<itemgra item_types="district_label_1e3,district_label_2e3,district_label_5e3" order="13-16"><circle text_size="60" color="" background_color="#FF99BB"/></itemgra>
-	<itemgra item_types="district_label_1e4,district_label_2e4,district_label_5e4" order="12"><circle text_size="52" color="" background_color="#FF99BB"/></itemgra>
-	<itemgra item_types="district_label_1e4,district_label_2e4,district_label_5e4" order="13-15"><circle text_size="64" color="" background_color="#FF99BB"/></itemgra>
-	<itemgra item_types="district_label_1e5,district_label_2e5,district_label_5e5" order="12"><circle text_size="60" color="" background_color="#FF99BB"/></itemgra>
-	<itemgra item_types="district_label_1e5,district_label_2e5,district_label_5e5" order="13-15"><circle text_size="72" color="" background_color="#FF99BB"/></itemgra>
-	<itemgra item_types="district_label_1e6,district_label_2e6,district_label_5e6" order="12"><circle text_size="64" color="" background_color="#FF99BB"/></itemgra>
-	<itemgra item_types="district_label_1e6,district_label_2e6,district_label_5e6" order="13-15"><circle text_size="78" color="" background_color="#FF99BB"/></itemgra>
-	<itemgra item_types="district_label_1e7" order="12-14"><circle text_size="84" background_color="#FF99BB"/></itemgra>
-	<itemgra item_types="place_label" order="15-"><circle text_size="32" color="#00B3B3"/></itemgra>
-	<itemgra item_types="town_label" order="14-"><circle text_size="32" color="#FFFFFF"/></itemgra>
-	<itemgra item_types="town_label_0e0,town_label_1e0,town_label_2e0" order="14-"><circle text_size="34" color="#FFFFFF"/></itemgra>
-	<itemgra item_types="town_label_5e0,town_label_1e1,town_label_2e1,town_label_5e1" order="13-"><circle text_size="36" color="#FFFFFF"/></itemgra>
-	<itemgra item_types="town_label_1e2,town_label_2e2,town_label_5e2" order="12-13"><circle text_size="36" color="#FFFFFF"/></itemgra>
-	<itemgra item_types="town_label_1e2,town_label_2e2,town_label_5e2" order="14-17"><circle text_size="42" color="#FFFFFF"/></itemgra>
-	<itemgra item_types="town_label_1e3,town_label_2e3,town_label_5e3" order="12-13"><circle text_size="36" color="#FFFFFF"/></itemgra>
-	<itemgra item_types="town_label_1e3,town_label_2e3,town_label_5e3" order="14-17"><circle text_size="42" color="#FFFFFF"/></itemgra>
-	<itemgra item_types="town_label_1e4,town_label_2e4" order="12-16"><circle text_size="42" color="#FFFFFF"/></itemgra>
-	<itemgra item_types="town_label_5e4" order="12-16"><circle text_size="46" color="#FFFFFF"/></itemgra>
-	<itemgra item_types="town_label_1e5,town_label_2e5" order="12-15"><circle text_size="52" color="#FFFFFF"/></itemgra>
-	<itemgra item_types="town_label_5e5" order="12-15"><circle text_size="52" color="#FFFFFF"/></itemgra>
-	<itemgra item_types="town_label_1e6,town_label_2e6" order="12-14"><circle text_size="56" color="#FFFFFF"/></itemgra>
-	<itemgra item_types="town_label_5e6" order="12-14"><circle text_size="56" color="#FFFFFF"/></itemgra>
-	<itemgra item_types="town_label_1e7" order="12-14"><circle text_size="60" color="#FFFFFF"/></itemgra>
+	<itemgra item_types="street_unkn" order="16">	<text text_size="26" color="#A90000"/></itemgra>
+	<itemgra item_types="street_unkn" order="17-">	<text text_size="32" color="#A90000"/></itemgra>
+	<itemgra item_types="house_number" order="17">	<circle text_size="32" color="#FF00FF"/></itemgra>
+	<itemgra item_types="house_number" order="18-">	<circle text_size="38" color="#FF00FF"/></itemgra>
+	<itemgra item_types="district_label" order="13-15">	<circle text_size="42" color="" background_color="#FF99BB"/></itemgra>
+	<itemgra item_types="district_label" order="16-">	<circle text_size="48" color="" background_color="#FF99BB"/></itemgra>
+	<itemgra item_types="district_label_0e0,district_label_1e0,district_label_2e0,district_label_5e0" order="13-15">	<circle text_size="42" color="" background_color="#FF99BB"/></itemgra>
+	<itemgra item_types="district_label_0e0,district_label_1e0,district_label_2e0,district_label_5e0" order="16-">		<circle text_size="48" color="" background_color="#FF99BB"/></itemgra>
+	<itemgra item_types="district_label_1e1,district_label_2e1,district_label_5e1" order="13-16">	<circle text_size="48" color="" background_color="#FF99BB"/></itemgra>
+	<itemgra item_types="district_label_1e2,district_label_2e2,district_label_5e2" order="13-16">	<circle text_size="52" color="" background_color="#FF99BB"/></itemgra>
+	<itemgra item_types="district_label_1e3,district_label_2e3,district_label_5e3" order="12">		<circle text_size="46" color="" background_color="#FF99BB"/></itemgra>
+	<itemgra item_types="district_label_1e3,district_label_2e3,district_label_5e3" order="13-16">	<circle text_size="56" color="" background_color="#FF99BB"/></itemgra>
+	<itemgra item_types="district_label_1e4,district_label_2e4,district_label_5e4" order="12">		<circle text_size="52" color="" background_color="#FF99BB"/></itemgra>
+	<itemgra item_types="district_label_1e4,district_label_2e4,district_label_5e4" order="13-15">	<circle text_size="60" color="" background_color="#FF99BB"/></itemgra>
+	<itemgra item_types="district_label_1e5,district_label_2e5,district_label_5e5" order="12">		<circle text_size="60" color="" background_color="#FF99BB"/></itemgra>
+	<itemgra item_types="district_label_1e5,district_label_2e5,district_label_5e5" order="13-15">	<circle text_size="64" color="" background_color="#FF99BB"/></itemgra>
+	<itemgra item_types="district_label_1e6,district_label_2e6,district_label_5e6" order="12">		<circle text_size="64" color="" background_color="#FF99BB"/></itemgra>
+	<itemgra item_types="district_label_1e6,district_label_2e6,district_label_5e6" order="13-15">	<circle text_size="72" color="" background_color="#FF99BB"/></itemgra>
+	<itemgra item_types="district_label_1e7" order="12-14">	<circle text_size="84" color="" background_color="#FF99BB"/></itemgra>
+	<itemgra item_types="place_label" order="15-">	<circle text_size="32" color="#00B3B3"/></itemgra>
+	<itemgra item_types="town_label,town_label_0e0" order="14-">	<circle text_size="32" color="#FFFFFF"/></itemgra>
+	<itemgra item_types="town_label_1e0,town_label_2e0,town_label_5e0" order="14-">	<circle text_size="34" color="#FFFFFF"/></itemgra>
+	<itemgra item_types="town_label_1e1,town_label_2e1,town_label_5e1" order="13-">	<circle text_size="36" color="#FFFFFF"/></itemgra>
+	<itemgra item_types="town_label_1e2,town_label_2e2,town_label_5e2" order="13">	<circle text_size="38" color="#FFFFFF"/></itemgra>
+	<itemgra item_types="town_label_1e2,town_label_2e2,town_label_5e2" order="14-17">	<circle text_size="42" color="#FFFFFF"/></itemgra>
+	<itemgra item_types="town_label_1e3,town_label_2e3,town_label_5e3" order="12-13">	<circle text_size="42" color="#FFFFFF"/></itemgra>
+	<itemgra item_types="town_label_1e3,town_label_2e3,town_label_5e3" order="14-17">	<circle text_size="46" color="#FFFFFF"/></itemgra>
+	<itemgra item_types="town_label_1e4,town_label_2e4,town_label_5e4" order="12-16">	<circle text_size="48" color="#FFFFFF"/></itemgra>
+	<itemgra item_types="town_label_1e5,town_label_2e5,town_label_5e5" order="12-15">	<circle text_size="52" color="#FFFFFF"/></itemgra>
+	<itemgra item_types="town_label_1e6,town_label_2e6,town_label_5e6" order="12-14">	<circle text_size="56" color="#FFFFFF"/></itemgra>
+	<itemgra item_types="town_label_1e7" order="12-14">	<circle text_size="60" color="#FFFFFF"/></itemgra>
 </layer>
 </layout>
 	<!--  Weiteres Layout -->
