@@ -1,0 +1,2 @@
+navit.layout=navit.layout[@name=="Android-Day"];
+navit.vehicle[@name="Local GPS"].profilename="car";
